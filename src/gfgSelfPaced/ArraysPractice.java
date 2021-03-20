@@ -3,9 +3,9 @@ package gfgSelfPaced;
 import java.util.*;
 class ArraysPractice {
 	// ***************         GFG SELFPACED ARRAY PRACTICE            ***************
-	
-	
-	
+
+
+
 	public static void main(String[] args) {
 //		int [] arr = new int[] {6,8,4,8,8};
 //		int[] arr = {787, 656, 543, 291, 27, 165, 659, 736, 232, 351, 237, 28, 75, 207, 274};
@@ -14,8 +14,10 @@ class ArraysPractice {
 //		int[] arr = {1,2,1,3,4,3,3};
 //		printNbonachiSeries(4, 10);
 //		countDistinctElemenmtsInMWindow(arr, 4);
-		prefixSum();
-		System.out.println();
+//		prefixSum();
+		int[] arr = {10,10,10};
+		int num = secondLargestElementInArray(arr);
+		System.out.println(num);
 	}
 	
 	
@@ -240,6 +242,16 @@ class ArraysPractice {
 		return profit;
 	}
 
+	static void removeDuplicateFromSortedArray(int [] arr){
+		int res = 1;
+		for (int i=1;i<arr.length;i++){
+			if (arr[i]!=arr[res]){
+				arr[res] = arr[i];
+				res++;
+			}
+		}
+	}
+
 	static int secondLargestElementInArray(int[] arr){
 		int n = arr.length;
 		int res = -1, largest = 0;
@@ -254,7 +266,7 @@ class ArraysPractice {
 				}
 			}
 		}
-		return arr[res];
+		return res != -1 ? arr[res] : -1;
 	}
 
 	static int binarySearch(int [] arr,int left,int right,int target) {
