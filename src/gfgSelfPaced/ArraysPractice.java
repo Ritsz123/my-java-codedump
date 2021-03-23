@@ -15,9 +15,18 @@ class ArraysPractice {
 //		printNbonachiSeries(4, 10);
 //		countDistinctElemenmtsInMWindow(arr, 4);
 //		prefixSum();
-		int[] arr = {10,10,10};
-		int num = secondLargestElementInArray(arr);
-		System.out.println(num);
+//		int[] arr = {10,10,10};
+//		int num = secondLargestElementInArray(arr);
+//		System.out.println(num);
+
+//		int[] arr = { 1,2,3,4,5};
+//		leftRotateArrayByKPositions(arr,2);
+
+//		int[] arr = { 7,10,4,3,6,5,2 };
+//		leadersInArray(arr);
+
+		int[] arr = { 2,3,10,6,4,8,1 };
+		maximumDifferenceInArray(arr);
 	}
 	
 	
@@ -240,6 +249,46 @@ class ArraysPractice {
 			}
 		}
 		return profit;
+	}
+
+	static void leftRotateArrayByKPositions(int [] arr,int k){
+		int[] temp = new int[k];
+		for (int i=0;i<k;i++){
+			temp[i] = arr[i];
+		}
+		for (int i=k;i<arr.length;i++){
+			arr[i-k] = arr[i];
+		}
+		for (int i=0;i<k;i++){
+			arr[i+k+1] = temp[i];
+		}
+		for (int a: arr) {
+			System.out.print(a + " ");
+		}
+	}
+
+//	PRINTS IN REVERSE ORDER USE O(n) EXTRA SPACE TO REVERSE IT
+	static void leadersInArray(int[] arr){
+		int n = arr.length;
+		int max = arr[n-1];
+		System.out.println(max);
+		for (int i=n-2;i>=0;i--) {
+			if (arr[i] > max) {
+				max = arr[i];
+				System.out.println(max);
+			}
+		}
+	}
+
+//	where i<j
+	static void maximumDifferenceInArray(int[] arr){
+		int res = arr[0]-arr[1];
+		int min = arr[0];
+		for(int j=1;j<arr.length;j++){
+			res = Math.max(res,arr[j]-min);
+			min = Math.min(min,arr[j]);
+		}
+		System.out.println(res);
 	}
 
 	static void removeDuplicateFromSortedArray(int [] arr){
