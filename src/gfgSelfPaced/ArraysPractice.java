@@ -25,8 +25,11 @@ class ArraysPractice {
 //		int[] arr = { 7,10,4,3,6,5,2 };
 //		leadersInArray(arr);
 
-		int[] arr = { 2,3,10,6,4,8,1 };
-		maximumDifferenceInArray(arr);
+//		int[] arr = { 2,3,10,6,4,8,1 };
+//		maximumDifferenceInArray(arr);
+
+		int[] arr = { 40,50,50,50 };
+		frequenciesOfSortedArray(arr);
 	}
 	
 	
@@ -219,7 +222,7 @@ class ArraysPractice {
 		return max;
 	}
 	
-	
+//	trapping rain water
 	static int maxWater(int []arr) {
 		int n = arr.length;
 		int water=0;
@@ -329,5 +332,23 @@ class ArraysPractice {
 			}
 		}
 		return -1;
+	}
+
+	static void frequenciesOfSortedArray(int[] arr){
+		int freq = 1;
+		int n = arr.length;
+		int i = 1;
+		while (i<n){
+			while (i<n && arr[i]==arr[i-1]){
+				freq++;
+				i++;
+			}
+			System.out.println(arr[i-1] + " " + freq);
+			i++;
+			freq = 1;
+		}
+		if (n==1 || arr[n-1]!=arr[n-2]){
+			System.out.println(arr[n-1] + " " + freq);
+		}
 	}
 }
