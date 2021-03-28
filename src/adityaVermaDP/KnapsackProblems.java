@@ -1,5 +1,7 @@
 package adityaVermaDP;
 
+import java.util.ArrayList;
+
 public class KnapsackProblems {
     public static void main(String[] args) {
 //        // Input for 0 1 knapsack
@@ -21,6 +23,9 @@ public class KnapsackProblems {
 //        int[] arr2 = { 2,3,5,6,8,10 };
 //        int sum = 10;
 //        System.out.println(countOfSubsetsOfSum(arr2,sum));
+
+        int[] arr3 = { 1,2,7,2,2 };
+        System.out.println(minimumSubsetSumDifference(arr3));
     }
 
 //    maximize the profit (standard knapsack)
@@ -110,5 +115,44 @@ public class KnapsackProblems {
             }
         }
         return dp[n][sum];
+    }
+
+    static int minimumSubsetSumDifference(int[] arr){
+        int sum = 0;
+        int n = arr.length;
+        for (int i=0;i<n;i++){
+            sum+=arr[i];
+        }
+
+        //code similar to subsetSum
+        boolean[][] dp = new boolean[n+1][sum+1];
+        for (int j = 0;j<=sum;j++){
+            dp[0][j] = false;
+        }
+        for (int i = 0;i<=n;i++){
+            dp[i][0] = true;
+        }
+
+        for (int i = 1;i<=n;i++){
+            for (int j = 1;j<=sum;j++){
+                if (arr[i-1] <= j){
+                    dp[i][j] = dp[i-1][j] || dp[i-1][j-arr[i-1]];
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+
+//        actual new code for this problem
+        ArrayList<Integer> al = new ArrayList<>();
+        for (int i = 0;i<(sum+2)/2;i++){
+            if (dp[n][i]) al.add(i);
+        }
+
+        int mn = Integer.MAX_VALUE;
+        for (int i = 0;i<al.size();i++){
+            mn = Math.min(mn,sum-2 * al.get(i));
+        }
+        return mn;
     }
 }
