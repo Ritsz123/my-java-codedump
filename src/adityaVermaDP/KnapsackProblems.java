@@ -24,8 +24,13 @@ public class KnapsackProblems {
 //        int sum = 10;
 //        System.out.println(countOfSubsetsOfSum(arr2,sum));
 
-        int[] arr3 = { 1,2,7,2,2 };
-        System.out.println(minimumSubsetSumDifference(arr3));
+//        int[] arr3 = { 1,2,7,2,2 };
+//        System.out.println(minimumSubsetSumDifference(arr3));
+
+        //number of subset with given difference
+        int[] arr4 = { 1,1,2,3 };
+        int diff = 1;
+        System.out.println(numberOfSubsetsWithGivenDifference(arr4,diff));
     }
 
 //    maximize the profit (standard knapsack)
@@ -154,5 +159,15 @@ public class KnapsackProblems {
             mn = Math.min(mn,sum-2 * al.get(i));
         }
         return mn;
+    }
+
+    static int numberOfSubsetsWithGivenDifference(int [] arr, int diff){
+        int sum = 0;
+        int n = arr.length;
+        for (int i =0;i<n;i++) sum+=arr[i];
+
+        int s1 = (diff + sum)/2;
+
+        return countOfSubsetsOfSum(arr,s1);
     }
 }
