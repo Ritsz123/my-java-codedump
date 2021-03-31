@@ -19,18 +19,24 @@ public class KnapsackProblems {
 //        int[] arr1 = { 1,5,11,5 };
 //        System.out.println(equalSumPartition(arr1));
 
-        // Input for count of subsets of given sum
+//        // Input for count of subsets of given sum
 //        int[] arr2 = { 2,3,5,6,8,10 };
 //        int sum = 10;
 //        System.out.println(countOfSubsetsOfSum(arr2,sum));
 
+//        //minimum subset sum difference
 //        int[] arr3 = { 1,2,7,2,2 };
 //        System.out.println(minimumSubsetSumDifference(arr3));
 
-        //number of subset with given difference
-        int[] arr4 = { 1,1,2,3 };
-        int diff = 1;
-        System.out.println(numberOfSubsetsWithGivenDifference(arr4,diff));
+//        //number of subset with given difference
+//        int[] arr4 = { 1,1,2,3 };
+//        int diff = 1;
+//        System.out.println(numberOfSubsetsWithGivenDifference(arr4,diff));
+
+//        //Target sum
+        int[] arr5 = {1,1,2,3};
+        int target = 1;
+        System.out.println(targetSum(arr5,target));
     }
 
 //    maximize the profit (standard knapsack)
@@ -170,4 +176,9 @@ public class KnapsackProblems {
 
         return countOfSubsetsOfSum(arr,s1);
     }
+
+    static int targetSum(int[] arr,int target){
+        return numberOfSubsetsWithGivenDifference(arr,target);
+    }
+
 }
