@@ -34,10 +34,18 @@ public class KnapsackProblems {
 //        System.out.println(numberOfSubsetsWithGivenDifference(arr4,diff));
 
 //        //Target sum
-        int[] arr5 = {1,1,2,3};
-        int target = 1;
-        System.out.println(targetSum(arr5,target));
+//        int[] arr5 = {1,1,2,3};
+//        int target = 1;
+//        System.out.println(targetSum(arr5,target));
+
+//        // unbounded knapsack
+        int[] val = {10,20,80,100,90};
+        int[] wt = {10,5,25,20,10};
+        int W = 20;
+        System.out.println(unboundedKnapsack(val,wt,W));
     }
+
+    // problems related to 0/1 knapsack
 
 //    maximize the profit (standard knapsack)
     static int zeroOneKnapsack(int []val,int [] wt,int W){
@@ -181,4 +189,27 @@ public class KnapsackProblems {
         return numberOfSubsetsWithGivenDifference(arr,target);
     }
 
+
+    // problems related to unbounded knapsack
+    static int unboundedKnapsack(int [] val,int[] wt, int W){
+        int n = val.length;
+        int[][] dp = new int[n+1][W+1];
+        for (int i =0;i<=n;i++){
+            dp[i][0] = 0;
+        }
+        for (int j = 0;j<=W;j++){
+            dp[0][j] = 0;
+        }
+
+        for (int i=1;i<=n;i++){
+            for (int j = 1;j<=W;j++){
+                if (wt[i-1] <= j){
+                    dp[i][j] = Math.max(dp[i-1][j], val[i-1] + dp[i][j - wt[i-1]]);
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][W];
+    }
 }
