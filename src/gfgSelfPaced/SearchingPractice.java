@@ -19,8 +19,15 @@ public class SearchingPractice {
 //		for(int x:ans) System.out.print( x + " ");
 //		boolean ans = findIfTheArrayContainsTripletWithSumX(arr, 32);
 //		System.out.println(ans);
-		int [] arr = { 8,7,6,8,6,6,6,6 };
-		System.out.println(findIndexOfMajorityElement(arr));
+//		int [] arr = { 8,7,6,8,6,6,6,6 };
+//		System.out.println(findIndexOfMajorityElement(arr));
+
+//		int[] bigArray = new int[100000];
+//		for (int i = 0;i<bigArray.length;i++){
+//			bigArray[i] = i * 10;
+//		}
+//
+//		System.out.println(searchInInfiniteSizedSortedArray(bigArray,82520));
 	}
 	
 	static int findIndexOfMajorityElement(int []arr) {
@@ -52,6 +59,7 @@ public class SearchingPractice {
 		}
 		return false;
 	}
+
 	static boolean checkPairWithSumXinArray(int [] arr,int x,int start,int end) {
 		int i=start,j = end-1;
 		while(i<j) {
@@ -79,8 +87,7 @@ public class SearchingPractice {
 		}
 		return new int[] { -1, -1 };
 	}
-	
-	
+
 	static int[] findPairInArrayWithSumXInUnsortedArray(int[] arr,int x) {
 		int n = arr.length;
 //		O(N * N)
@@ -129,7 +136,6 @@ public class SearchingPractice {
 		return -1;
 	}
 	
-	
 	static int findPeakElementInTheArray(int [] arr,int n) {
 		
 		
@@ -152,8 +158,17 @@ public class SearchingPractice {
 		}
 		return -1;
 	}
-	
-	
+
+	//solution should be log n
+	static int searchInInfiniteSizedSortedArray(int[] arr,int num){
+		if(arr[0] == num) return 0;
+		int i = 1;
+		while (arr[i] < num){
+			i = i*2;
+			if(arr[i] == num) return i;
+		}
+		return binarySearch(arr,i/2+1,i-1,num);
+	}
 	
 	static int findSquareRootFloor(int num) {
 //		Brute Approach  TC: O(sqrt(num))
@@ -184,9 +199,7 @@ public class SearchingPractice {
 		if(start==-1) return 0;
 		else return n-start;
 	}
-	
-	
-	
+
 	// ********* SOLUTION SHOULD BE STRICTLY O(LOG N) IN WORST CASE ************* \\
 	static int countOccurancesOfNumberInSortedArray(int []arr,int num) {
 		int start = findFirstIndexOfNumber(arr, num);
@@ -194,7 +207,6 @@ public class SearchingPractice {
 		if(start==-1) return 0;
 		else return end-start+1;
 	}
-	
 
 	static int findLastIndexOfNumber(int [] arr,int num) {
 		int lo=0;
@@ -232,6 +244,7 @@ public class SearchingPractice {
 		}
 		return -1;
 	}
+
 	static int binarySearch(int [] arr,int start,int end,int num) {
 		if(start<=end) {
 			int mid = (start+end)/2;
