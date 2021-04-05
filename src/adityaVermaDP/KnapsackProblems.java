@@ -45,10 +45,15 @@ public class KnapsackProblems {
 //        System.out.println(unboundedKnapsack(val,wt,W));
 
 //        // Rod cutting problem
-        int[] prices = {5,10,15};
-        int[] pieces = {1,2,3};
-        int rod = 5;
-        System.out.println(rodCuttingProblem(prices,pieces,rod));
+//        int[] prices = {5,10,15};
+//        int[] pieces = {1,2,3};
+//        int rod = 5;
+//        System.out.println(rodCuttingProblem(prices,pieces,rod));
+
+//        // Coin change problem
+        int[] coins = {1,2,5};
+        int sum = 5;
+        System.out.println(coinChangeProblem1(coins,sum));
     }
 
     // problems related to 0/1 knapsack
@@ -240,5 +245,27 @@ public class KnapsackProblems {
             }
         }
         return dp[n][rodLen];
+    }
+
+//    number of ways to form the given sum from coins
+    static int coinChangeProblem1(int[] coins,int sum){
+        int n = coins.length;
+        int[][] dp = new int[n+1][sum+1];
+
+        for(int j = 1;j<=sum;j++){
+            dp[0][j] = 0;
+        }
+        for(int i = 0;i<=n;i++){
+            dp[i][0] = 1;
+        }
+
+        for(int i = 1;i<=n;i++){
+            for(int j = 1;j<=sum;j++){
+                if(coins[i-1]<=j){
+                    dp[i][j] = dp[i-1][j] + dp[i][j-coins[i-1]];
+                }else dp[i][j] = dp[i-1][j];
+            }
+        }
+        return dp[n][sum];
     }
 }
