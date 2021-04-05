@@ -39,10 +39,16 @@ public class KnapsackProblems {
 //        System.out.println(targetSum(arr5,target));
 
 //        // unbounded knapsack
-        int[] val = {10,20,80,100,90};
-        int[] wt = {10,5,25,20,10};
-        int W = 20;
-        System.out.println(unboundedKnapsack(val,wt,W));
+//        int[] val = {10,20,80,100,90};
+//        int[] wt = {10,5,25,20,10};
+//        int W = 20;
+//        System.out.println(unboundedKnapsack(val,wt,W));
+
+//        // Rod cutting problem
+        int[] prices = {5,10,15};
+        int[] pieces = {1,2,3};
+        int rod = 5;
+        System.out.println(rodCuttingProblem(prices,pieces,rod));
     }
 
     // problems related to 0/1 knapsack
@@ -211,5 +217,28 @@ public class KnapsackProblems {
             }
         }
         return dp[n][W];
+    }
+
+    static int rodCuttingProblem(int[] prices,int[] pieces,int rodLen){
+        int n = prices.length;
+        int[][] dp = new int[n+1][rodLen+1];
+
+        for(int j=0;j<=rodLen;j++){
+            dp[0][j] = 0;
+        }
+        for(int i=0;i<=n;i++){
+            dp[i][0] = 0;
+        }
+
+        for(int i=1;i<=n;i++){
+            for(int j=1;j<=rodLen;j++){
+                if(pieces[i-1]<=j){
+                    dp[i][j] = Math.max(dp[i-1][j],prices[i-1] + dp[i][j-pieces[i-1]]);
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        return dp[n][rodLen];
     }
 }
