@@ -60,38 +60,25 @@ public class SortingPractice {
 		
 //		*************
 		
-		int [] a = { 5, 3, 18, 2 };
-		int [] b = { 10,15, 30,7 };
-		int n = a.length;
-		Intervals[] arr = new Intervals[n];
-		for(int i=0;i<n;i++) {
-			arr[i] = new Intervals(a[i],b[i]);
-		}
-		mergeOverlappingIntervals(arr,n);
+//		int [] a = { 5, 3, 18, 2 };
+//		int [] b = { 10,15, 30,7 };
+//		int n = a.length;
+//		Intervals[] arr = new Intervals[n];
+//		for(int i=0;i<n;i++) {
+//			arr[i] = new Intervals(a[i],b[i]);
+//		}
+//		mergeOverlappingIntervals(arr,n);
 		
 //		**************
 		
-//		int [] arr = { 900,600,700 };
-//		int [] dept = { 1000,800,730 };
-//		System.out.println(meetMaximumGuestsInTheParty(arr, dept));
+		int [] arr = { 900,600,700 };
+		int [] dept = { 1000,800,730 };
+		System.out.println(meetMaximumGuestsInTheParty(arr, dept));
 	}
 	
 	
 	static int meetMaximumGuestsInTheParty(int [] arr,int [] dept) {
 		int n = arr.length;
-//		int res=0;
-//		for(int i=0;i<n;i++) {
-//			int curr=1;
-//			for(int j=i+1;j<n;j++) {
-//				if((arr[i]>=arr[j] && arr[i]<=dept[j]) || (arr[j]>=arr[i] && arr[j]<=dept[i])) {
-//					curr++;
-//				}
-//				res=Math.max(res, curr);
-//			}
-//		}
-//		return res;
-		
-		
 //		Optimal O(n log n) 
 		
 		Arrays.sort(arr);
@@ -100,7 +87,7 @@ public class SortingPractice {
 		int res=0;
 		int i=0,j=0;
 		while(i<n && j<n) {
-			if(arr[i]<=dept[j]) {
+			if(arr[i] <= dept[j]) {
 				i++;
 				count++;
 			}else {
