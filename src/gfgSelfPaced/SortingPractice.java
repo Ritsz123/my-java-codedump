@@ -2,20 +2,19 @@ package gfgSelfPaced;
 
 import java.util.*;
 
-class Intervals{
+class Intervals implements Comparable<Intervals>{
 	int start, end;
 	Intervals(int a,int b){
 		start=a;
 		end=b;
 	}
-}
 
-class SortIntervals implements Comparator<Intervals>{
 	@Override
-	public int compare(Intervals o1, Intervals o2) {
-		return (o1.start-o2.start);
+	public int compareTo(Intervals o1) {
+		return this.start-o1.start;
 	}
 }
+
 
 public class SortingPractice {
 
@@ -61,14 +60,14 @@ public class SortingPractice {
 		
 //		*************
 		
-//		int [] a = { 5, 3, 18, 2 };
-//		int [] b = { 10,15, 30,7 };
-//		int n = a.length;
-//		Intervals[] arr = new Intervals[n];
-//		for(int i=0;i<n;i++) {
-//			arr[i] = new Intervals(a[i],b[i]); 
-//		}
-//		mergeOverlappingIntervals(arr,n);
+		int [] a = { 5, 3, 18, 2 };
+		int [] b = { 10,15, 30,7 };
+		int n = a.length;
+		Intervals[] arr = new Intervals[n];
+		for(int i=0;i<n;i++) {
+			arr[i] = new Intervals(a[i],b[i]);
+		}
+		mergeOverlappingIntervals(arr,n);
 		
 //		**************
 		
@@ -113,16 +112,17 @@ public class SortingPractice {
 		return res;
 	}
 	
-	
-	
 	static void mergeOverlappingIntervals(Intervals[] arr,int n) {
 //		O(n log n) TC
-		Arrays.sort(arr, new SortIntervals());
+		//Increasing start time
+
+		Arrays.sort(arr);
 		int res=0;
 		for(int i=1;i<n;i++) {
 			if(arr[res].end>=arr[i].start) {
-				arr[res].end = Math.max(arr[res].end,arr[i].end);
+				//merge the interval
 				arr[res].start = Math.min(arr[res].start, arr[i].start);
+				arr[res].end = Math.max(arr[res].end,arr[i].end);
 			}else {
 				res++;
 				arr[res]=arr[i];
@@ -132,35 +132,6 @@ public class SortingPractice {
 		for(int i=0;i<=res;i++) {
 			System.out.println(arr[i].start + " " + arr[i].end);
 		}
-		
-//		naive approach O(n^3) soln
-		
-//		for(int i=0;i<n;i++) {
-//			int a = arr[i].start;
-//			int b = arr[i].end;
-//			for(int j=i+1;j<n;j++) {
-//				if(intercet(arr[i],arr[j])) {
-//					a = Math.min(arr[i].start, arr[i+1].start);
-//					b = Math.max(arr[i].end, arr[i+1].end);
-//					for(int k=j+1;k<n;k++) {
-//						arr[k-1]=arr[k];
-//					}
-//					n--;
-//				}
-//			}
-//			arr[i].start=a;
-//			arr[i].end=b;
-//		}
-//		for(int i=0;i<n;i++) {
-//			Intervals x = arr[i];
-//			System.out.println(x.start + " " + x.end);
-//		}
-	}
-	static boolean intercet(Intervals a,Intervals b) {
-		//to find intersection of pairs
-		if((a.end>=b.start && a.end <=b.end) || (b.end>=a.start && b.end <= a.end))
-			return true;
-		return false;
 	}
 	
 	static void sortArrayWithThreeTypesOfElements(int [] arr) {
@@ -180,7 +151,6 @@ public class SortingPractice {
 		}
 	}
 	
-	
 //	array segregation in 1 traversal & constant space
 	static void sortArrayWithTwoTypesOfElements(int [] arr) {
 		int i=0,j=arr.length-1;
@@ -190,16 +160,12 @@ public class SortingPractice {
 			else {
 //				swap i & j
 				swap(arr, i, j);
-//				int t = arr[i];
-//				arr[i] = arr[j];
-//				arr[j] = t;
 				j--;
 			}
 		}
 //		System.out.println(c);
 	}
-	
-	
+
 //	chocolate distribution problem
 	static int minimumDifferenceOfMinAndMaxOfMNumbers(int [] arr,int m) {
 		if(m>arr.length) return -1;
@@ -210,8 +176,7 @@ public class SortingPractice {
 		}
 		return diff;
 	}
-	
-	
+
 	static int findKthSmallestElementInArray(int [] arr,int n,int k) {
 //		use lambardo partition technique (same as quick sort)
 		int l = 0,r=n-1;
@@ -234,17 +199,11 @@ public class SortingPractice {
 				//swap i++ & j
 				i++;
 				swap(arr, i, j);
-//				int t = arr[j];
-//				arr[j]=arr[i];
-//				arr[i]=t;
 			}
 		}
 //		swap i++ & pivot and return position of pivot i.e i++'s
 		i++;
-
-		int t=arr[i];
-		arr[i]=pivot;
-		arr[r]=t;
+		swap(arr,i,r);
 		return i;
 	}
 	
