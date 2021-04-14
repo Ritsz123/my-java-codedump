@@ -71,11 +71,33 @@ public class SortingPractice {
 		
 //		**************
 		
-		int [] arr = { 900,600,700 };
-		int [] dept = { 1000,800,730 };
-		System.out.println(meetMaximumGuestsInTheParty(arr, dept));
+//		int [] arr = { 900,600,700 };
+//		int [] dept = { 1000,800,730 };
+//		System.out.println(meetMaximumGuestsInTheParty(arr, dept));
+
+		int[] a = { 900, 940, 950, 1100, 1500, 1800 };
+		int[] b = { 910, 1200, 1120, 1130, 1900, 2000 };
+		System.out.println(minimumPlatforms(a,b));
 	}
-	
+
+
+	static int minimumPlatforms(int[] arrivals,int[] departures){
+		int minPlatforms = 0;
+		Arrays.sort(arrivals);
+		Arrays.sort(departures);
+		int i=0,j=0,n = arrivals.length, p=0;
+		while (i<n && j<n){
+			if(arrivals[i] <= departures[j]){
+				p++;
+				i++;
+			}else{
+				p--;
+				j++;
+			}
+			minPlatforms = Math.max(p,minPlatforms);
+		}
+		return minPlatforms;
+	}
 
 	static void mergeWithoutExtraSpace(int[] a,int[] b){
 		int n = a.length;
