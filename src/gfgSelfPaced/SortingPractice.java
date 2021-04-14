@@ -95,6 +95,8 @@ public class SortingPractice {
 				j++;
 			}
 		}
+		Arrays.sort(a);
+		Arrays.sort(b);
 	}
 
 	static int meetMaximumGuestsInTheParty(int [] arr,int [] dept) {
