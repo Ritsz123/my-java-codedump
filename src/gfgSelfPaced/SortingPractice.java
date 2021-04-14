@@ -75,11 +75,38 @@ public class SortingPractice {
 //		int [] dept = { 1000,800,730 };
 //		System.out.println(meetMaximumGuestsInTheParty(arr, dept));
 
-		int[] a = { 900, 940, 950, 1100, 1500, 1800 };
-		int[] b = { 910, 1200, 1120, 1130, 1900, 2000 };
-		System.out.println(minimumPlatforms(a,b));
+//		int[] a = { 900, 940, 950, 1100, 1500, 1800 };
+//		int[] b = { 910, 1200, 1120, 1130, 1900, 2000 };
+//		System.out.println(minimumPlatforms(a,b));
+
+		int[] arr = {10, 30, 20,40,50};
+		cycleSortNonRepeatElements(arr);
+		for (int c: arr){
+			System.out.print(c + " ");
+		}
 	}
 
+	static void cycleSortNonRepeatElements(int[] arr){
+		for(int cs = 0; cs<arr.length;cs++){
+			int item = cs;
+			int pos = cs;
+			for (int i=cs+1;i<arr.length;i++){
+				if(arr[i] < arr[item]){
+					pos++;
+				}
+			}
+			swap(arr,pos,item);
+			while (pos !=cs ){
+				pos = cs;
+				for (int i = cs+1;i<arr.length;i++){
+					if (arr[i] < arr[item]){
+						pos++;
+					}
+				}
+				swap(arr,pos,item);
+			}
+		}
+	}
 
 	static int minimumPlatforms(int[] arrivals,int[] departures){
 		int minPlatforms = 0;
