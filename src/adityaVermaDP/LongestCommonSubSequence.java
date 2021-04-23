@@ -17,7 +17,11 @@ public class LongestCommonSubSequence {
 
 //        System.out.println(lcsTD(s1,s2,s1.length(),s2.length()));
 
-        System.out.println(longestCommonSubstring(s1,s2,s1.length(),s2.length()));
+//        System.out.println(longestCommonSubstring(s1,s2,s1.length(),s2.length()));
+
+//        System.out.println(printLongestCommonSubsequence(s1,s2));
+
+        System.out.println(shortestCommonSuperSequence(s1,s2));
     }
 
     static int longestCommonSubSequenceRecursive(String s1,String s2,int n,int m){
@@ -85,5 +89,52 @@ public class LongestCommonSubSequence {
             }
         }
         return mx;
+    }
+
+    static String printLongestCommonSubsequence(String s1,String s2){
+        int n = s1.length();
+        int m = s2.length();
+        int[][] dp = new int[n+1][m+1];
+
+        for (int i = 1;i <= n;i++){
+            for(int j = 1;j <= m; j++){
+                if (s1.charAt(i-1) == s2.charAt(j-1)){
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                }else{
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        String str = "";
+        int i = n,j=m;
+        while(i>0 && j>0){
+            if (s1.charAt(i-1) == s2.charAt(j-1)){
+                str+=s1.charAt(i-1);
+                i--;
+                j--;
+            }else{
+                if(dp[i-1][j]>dp[i][j-1]){
+                    i--;
+                }else{
+                    j--;
+                }
+            }
+        }
+        char[] ar = str.toCharArray();
+        i=0;j=ar.length-1;
+        while (i<j){
+            char t = ar[i];
+            ar[i] = ar[j];
+            ar[j] = t;
+            i++;
+            j--;
+        }
+        return new String(ar);
+    }
+
+    static int shortestCommonSuperSequence(String s1,String s2){
+        int n = s1.length();
+        int m = s2.length();
+        return n + m - lcsTD(s1,s2,n,m);
     }
 }
