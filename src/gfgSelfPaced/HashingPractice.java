@@ -36,8 +36,11 @@ public class HashingPractice {
 //		int [] arr = { 5,4,3,2, 10,11,12,13,14,15 };
 //		System.out.println(longestConsecutiveSubSequence(arr));
 		
-		int[] arr = { 10,20,10,10,30,40 };
-		countDistictElementInEachWindowOfSizeK(arr, 4);
+//		int[] arr = { 10,20,10,10,30,40 };
+//		countDistictElementInEachWindowOfSizeK(arr, 4);
+
+		int[] arr = {10,2,-2,-20,10};
+		System.out.println(countOfSubArraysWithGivenSum(arr,-10));
 	}
 	
 	static void countDistictElementInEachWindowOfSizeK(int [] arr,int k){
@@ -227,7 +230,21 @@ public class HashingPractice {
 		}
 		return count;
 	}
-	
+
+	static int countOfSubArraysWithGivenSum(int[] arr,int sum){
+		int count = 0;
+		HashMap<Integer,Integer> hm= new HashMap<>();
+		int ps = 0;
+		for (int i=0;i<arr.length;i++){
+			ps+=arr[i];
+			if (ps==sum) count++;
+			if (hm.containsKey(ps-sum)){
+				count+=hm.get(ps-sum);
+			}
+			hm.put(ps,hm.getOrDefault(ps,0) + 1);
+		}
+		return count;
+	}
 	
 	static boolean subArrayWithGivenSum(int [] arr, int k) {
 		int preSum=0;
