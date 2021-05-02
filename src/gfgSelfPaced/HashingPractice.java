@@ -72,8 +72,7 @@ public class HashingPractice {
 			System.out.print(map.size()+" ");
 		}
 	}
-	
-	
+
 	static int longestConsecutiveSubSequence(int [] arr) {
 //		Naive approach
 		
@@ -111,8 +110,7 @@ public class HashingPractice {
 		}
 		return ans;
 	}
-	
-	
+
 	static int longestCommonSpanWithSameSumInTwoBinaryArrays(int [] arr1,int[] arr2) {
 //		Naive approach
 		
@@ -151,48 +149,26 @@ public class HashingPractice {
 		}
 		return count;
 	}
-	
-	static int longestSubArrayWithEqualZerosAndOnes(int [] arr) {
-		
-//		Naive solution
-		
-//		int max=0;
-//		for(int i=0;i<arr.length;i++) {
-//			int count = 0;
-//			for(int j=i;j<arr.length;j++) {
-//				if(arr[j]==1) count++; else count--;
-//				if(count==0) {
-//					max = Math.max(max, j-i+1);
-//				}
-//			}
-//		}
-//		return max;
-		
-		HashMap<Integer,Integer> map = new HashMap<>();
-		int preSum=0;
-		int count=0;
-		
-		for(int i=0;i<arr.length;i++) {
-			if(arr[i]==0) {
-				arr[i]=-1;
-			}
+
+	static int countOfSubArraysWithEqualNumberOfZerosAnsOnes(int[] arr){
+		// consider 0 as -1 and solve according to zero sum subarray problem
+		for (int i=0;i<arr.length;i++){
+			if (arr[i] == 0) arr[i] = -1;
 		}
-		
-		for(int i=0;i<arr.length;i++) {
-			preSum+=arr[i];
-			if(preSum==0) {
-				count=i+1;
+
+		HashMap<Integer,Integer> hm = new HashMap<>();
+		int ps = 0;
+		int count = 0;
+		for (int i=0;i<arr.length;i++){
+			ps+=arr[i];
+			if (ps == 0) count++;
+			if (hm.containsKey(ps)){
+				count += hm.get(ps);
 			}
-			if(!map.containsKey(preSum)) {
-				map.put(preSum, i);
-			}
-			else {
-				count = Math.max(count, i-map.get(preSum));
-			}
+			hm.put(ps,hm.getOrDefault(ps,0) + 1);
 		}
 		return count;
 	}
-	
 	
 	static int longestSubarrayWithGivenSum(int [] arr,int sum) {
 //		
@@ -261,8 +237,7 @@ public class HashingPractice {
 		}
 		return false;
 	}
-	
-	
+
 	static boolean subArrayWithSumZero(int [] arr) {
 		HashSet<Integer> hs = new HashSet<>();
 		int pre_sum=0;
