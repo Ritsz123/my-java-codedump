@@ -1,6 +1,7 @@
 package gfgSelfPaced;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -39,10 +40,31 @@ public class HashingPractice {
 //		int[] arr = { 10,20,10,10,30,40 };
 //		countDistictElementInEachWindowOfSizeK(arr, 4);
 
-		int[] arr = {10,2,-2,-20,10};
-		System.out.println(countOfSubArraysWithGivenSum(arr,-10));
+//		int[] arr = {10,2,-2,-20,10};
+//		System.out.println(countOfSubArraysWithGivenSum(arr,-10));
+
+		int[] arr = {2,3,3,2};
+		int k = 3;
+		System.out.println(countOfMoreThanNByKOccurancesOfNumberInAnArray(arr,k));
 	}
-	
+
+	static int countOfMoreThanNByKOccurancesOfNumberInAnArray(int [] arr, int k){
+		Arrays.sort(arr);
+		int count = 0;
+		int x = 1;
+		for (int i = 1;i<arr.length;i++){
+			if (arr[i-1]==arr[i]) x++;
+			else{
+				if ( x> arr.length/k){
+					count++;
+				}
+				x = 1;
+			}
+		}
+		if (x > arr.length/k) count++;
+		return count;
+	}
+
 	static void countDistictElementInEachWindowOfSizeK(int [] arr,int k){
 		
 		HashMap<Integer,Integer> map = new HashMap<>();
@@ -112,23 +134,7 @@ public class HashingPractice {
 	}
 
 	static int longestCommonSpanWithSameSumInTwoBinaryArrays(int [] arr1,int[] arr2) {
-//		Naive approach
-		
-//		int count=0;
-//		for(int i=0;i<arr1.length;i++) {
-//			int sum1=0,sum2=0;
-//			for(int j=i;j<arr1.length;j++) {
-//				sum1+=arr1[j];
-//				sum2+=arr2[j];
-//				if(sum1==sum2) {
-//					count = Math.max(count, j-i+1);
-//				}
-//			}
-//		}
-//		return count;
-		
 //		Efficient solution
-		
 		
 		int [] arr = new int[arr1.length];
 		for(int i=0;i<arr1.length;i++) {
@@ -171,21 +177,6 @@ public class HashingPractice {
 	}
 	
 	static int longestSubarrayWithGivenSum(int [] arr,int sum) {
-//		
-//		Naive approach;
-		
-		
-//		int count=0;
-//		for(int i=0;i<arr.length;i++) {
-//			int temp=0;
-//			for(int j=i;j<arr.length;j++) {
-//				temp+=arr[j];
-//				if(temp==sum) {
-//					count = Math.max(count, j-i+1);
-//				}
-//			}
-//		}
-//		return count;
 		
 //		optimised
 		HashMap<Integer,Integer> map = new HashMap<>();
