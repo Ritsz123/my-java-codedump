@@ -31,8 +31,10 @@ public class StringsPractice {
 //		long end = System.currentTimeMillis();
 //		System.out.println("code executed in " + (end-start) + " ms");
 
-		String str = "dvdf";
-		System.out.println(longestSubstringWithDistinctCharacters(str));
+//		String str = "dvdf";
+//		System.out.println(longestSubstringWithDistinctCharacters(str));
+
+		System.out.println(checkIfTheStringIsSubSequenceOfOther("GEEKSFORGEEKS","GRGES"));
 	}
 
 	static int longestSubstringWithDistinctCharacters(String str){
@@ -159,5 +161,17 @@ public class StringsPractice {
 		}
 		System.out.println();
 		return count;
+	}
+
+	static boolean checkIfTheStringIsSubSequenceOfOther(String s1,String s2){
+		int i = 0,j=0;
+		while (i<s1.length()){
+			if (s1.charAt(i) == s2.charAt(j)){
+				j++;
+			}
+			i++;
+		}
+		if (j == s2.length()) return true;
+		return false;
 	}
 }
