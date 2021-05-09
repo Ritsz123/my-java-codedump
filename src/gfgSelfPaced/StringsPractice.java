@@ -1,5 +1,6 @@
 package gfgSelfPaced;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -34,7 +35,11 @@ public class StringsPractice {
 //		String str = "dvdf";
 //		System.out.println(longestSubstringWithDistinctCharacters(str));
 
-		System.out.println(checkIfTheStringIsSubSequenceOfOther("GEEKSFORGEEKS","GRGES"));
+//		System.out.println(checkIfTheStringIsSubSequenceOfOther("GEEKSFORGEEKS","GRGES"));
+
+//		System.out.println(leftMostRepeatingElement("maax"));
+
+		System.out.println(leftMostNonRepeatingElement("maaxm"));
 	}
 
 	static int longestSubstringWithDistinctCharacters(String str){
@@ -110,6 +115,7 @@ public class StringsPractice {
 		return true;
 	}
 
+	//anagram means every character from s2 should be present in s1 with same frequency
 	static boolean isAnagram(String s1,String s2){
 		if (s1.length()!=s2.length()) return false;
 
@@ -173,5 +179,34 @@ public class StringsPractice {
 		}
 		if (j == s2.length()) return true;
 		return false;
+	}
+
+	static int leftMostRepeatingElement(String str){
+		int[] count = new int[257];
+		int ans = -1;
+		for (int i = str.length()-1;i>=0;i--){
+			count[str.charAt(i)]++;
+			if (count[str.charAt(i)]>1) ans = i;
+		}
+		return ans;
+	}
+
+	static int leftMostNonRepeatingElement(String s){
+		int[] count = new int[257];
+		Arrays.fill(count, -1);
+		for (int i = 0;i<s.length();i++){
+			if (count[s.charAt(i)] == -1){
+				count[s.charAt(i)] = i;
+			}else{
+				count[s.charAt(i)] = -2;
+			}
+		}
+
+		int ans = Integer.MAX_VALUE;
+		for (int i = 0;i<count.length;i++){
+			if (count[i] >= 0)
+			ans = Math.min(ans,count[i]);
+		}
+		return ans;
 	}
 }
