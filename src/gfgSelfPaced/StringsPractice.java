@@ -39,7 +39,10 @@ public class StringsPractice {
 
 //		System.out.println(leftMostRepeatingElement("maax"));
 
-		System.out.println(leftMostNonRepeatingElement("maaxm"));
+//		System.out.println(leftMostNonRepeatingElement("maaxm"));
+
+//		patternMatchingNaive("aaaaaaaaa","aaaa");
+		patternMatchingNaiveOptimised("ritesh","sh");
 	}
 
 	static int longestSubstringWithDistinctCharacters(String str){
@@ -208,5 +211,39 @@ public class StringsPractice {
 			ans = Math.min(ans,count[i]);
 		}
 		return ans;
+	}
+
+	static void patternMatchingNaive(String str,String pat){
+		for (int i = 0;i <= str.length() - pat.length();i++){
+			boolean flag = true;
+			for (int j = 0;j<pat.length();j++){
+				if (str.charAt(i + j) != pat.charAt(j)){
+					flag = false;
+					break;
+				}
+			}
+			if (flag) System.out.print(i + " ");
+		}
+	}
+
+//	only works if the characters are non repeating
+	static void patternMatchingNaiveOptimised(String str, String pat){
+		int n = str.length();
+		int m = pat.length();
+
+		for (int i = 0;i <= n-m;){
+			int j = 0;
+			for (j=0;j<m;j++){
+				if (pat.charAt(j) != str.charAt(i +j)){
+					break;
+				}
+			}
+			if (j==m) System.out.print(i + " ");
+			if (j==0){
+				i++;
+			}else{
+				i = i+j;
+			}
+		}
 	}
 }
