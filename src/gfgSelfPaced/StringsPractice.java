@@ -42,7 +42,10 @@ public class StringsPractice {
 //		System.out.println(leftMostNonRepeatingElement("maaxm"));
 
 //		patternMatchingNaive("aaaaaaaaa","aaaa");
-		patternMatchingNaiveOptimised("ritesh","sh");
+//		patternMatchingNaiveOptimised("ritesh","sh");
+
+		rabinKarpAlgorithmForPatternMatching("ritesh","sh");
+//		fillLps("abcbabca");
 	}
 
 	static int longestSubstringWithDistinctCharacters(String str){
@@ -244,6 +247,57 @@ public class StringsPractice {
 			}else{
 				i = i+j;
 			}
+		}
+	}
+
+	static void rabinKarpAlgorithmForPatternMatching(String str,String pat){
+		int n = str.length();
+		int m = pat.length();
+
+		int patternHash = 0;
+		int currHash = 0;
+
+		for(int i = 0;i<m;i++){
+			patternHash += pat.charAt(i);
+			currHash += str.charAt(i);
+		}
+
+		for (int i = m;i<n;i++){
+//			System.out.println("pattern " + patternHash + " curr " + currHash);
+			if (patternHash == currHash){
+				boolean match = true;
+				for (int j = 0;j < m;j++){
+					if (pat.charAt(j) != str.charAt(i-m + j)){
+						match = false;
+						break;
+					}
+				}
+				if (match) System.out.print(i-m + " ");
+			}
+			currHash = currHash - str.charAt(i-m) + str.charAt(i);
+		}
+		if (currHash == patternHash) System.out.println(n-m);
+	}
+
+	static void fillLps(String str){
+		int[] lps = new int[str.length()];
+		int len = 0;
+		lps[0] = 0;
+		for (int i = 1;i<lps.length;i++){
+			if(str.charAt(i) == str.charAt(len)){
+				lps[i] = len+1;
+				len++;
+			} else {
+				if (len == 0){
+					lps[i] = 0;
+				} else {
+					len = lps[len-1];
+					i--;
+				}
+			}
+		}
+		for (int x:lps){
+			System.out.print(x + " ");
 		}
 	}
 }
