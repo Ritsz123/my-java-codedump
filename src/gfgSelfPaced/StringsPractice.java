@@ -44,8 +44,8 @@ public class StringsPractice {
 //		patternMatchingNaive("aaaaaaaaa","aaaa");
 //		patternMatchingNaiveOptimised("ritesh","sh");
 
-		rabinKarpAlgorithmForPatternMatching("ritesh","sh");
-//		fillLps("abcbabca");
+//		rabinKarpAlgorithmForPatternMatching("ritesh","sh");
+		fillLps("aaabaaaac");
 	}
 
 	static int longestSubstringWithDistinctCharacters(String str){
@@ -283,16 +283,18 @@ public class StringsPractice {
 		int[] lps = new int[str.length()];
 		int len = 0;
 		lps[0] = 0;
-		for (int i = 1;i<lps.length;i++){
+		int i = 1;
+		while(i < lps.length){
 			if(str.charAt(i) == str.charAt(len)){
 				lps[i] = len+1;
 				len++;
+				i++;
 			} else {
 				if (len == 0){
 					lps[i] = 0;
+					i++;
 				} else {
 					len = lps[len-1];
-					i--;
 				}
 			}
 		}
