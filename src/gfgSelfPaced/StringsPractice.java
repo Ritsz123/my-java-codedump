@@ -46,8 +46,11 @@ public class StringsPractice {
 
 //		rabinKarpAlgorithmForPatternMatching("ritesh","sh");
 
-		kmpPatternMatching("ababcababaad","ababa");
+//		kmpPatternMatching("ababcababaad","ababa");
+
+		System.out.println(smallestWindowOfStringContainingAllCharactersOfOther("badeaebcaae","aabc"));
 	}
+
 
 	static int longestSubstringWithDistinctCharacters(String str){
 		char[] arr = str.toCharArray();
@@ -71,6 +74,51 @@ public class StringsPractice {
 		return max;
 	}
 
+	static String smallestWindowOfStringContainingAllCharactersOfOther(String s1,String s2){
+		int n = s1.length();
+		int m = s2.length();
+
+		HashMap<Character,Integer> map = new HashMap<>();
+		int start = 0;
+		int count = 0;
+
+		int minLength = Integer.MAX_VALUE;
+		int minStart = 0;
+
+		for (int i = 0;i<m;i++){
+			map.put(s2.charAt(i),map.getOrDefault(s2.charAt(i),0)+1);
+		}
+
+		for (int end = 0; end<n; end++){
+			char currentChar = s1.charAt(end);
+
+			if (map.containsKey(currentChar)){
+				map.put(currentChar,map.get(currentChar) - 1);
+				if (map.get(currentChar) >= 0){
+					count++;
+				}
+			}
+
+			while (count == m) {
+				if (end - start + 1 < minLength){
+					minLength = end-start+1;
+					minStart = start;
+				}
+
+				char charAtStart = s1.charAt(start);
+				start++;
+
+				if (map.containsKey(charAtStart)){
+					if(map.get(charAtStart) == 0){
+						count--;
+					}
+					map.put(charAtStart, map.get(charAtStart) +1 );
+				}
+			}
+		}
+
+		return s1.substring(minStart,minStart + minLength);
+	}
 
 	static int lexicographicRankOfTheString(String str,int index,int n){
 		if (index==str.length()){
