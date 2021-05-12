@@ -95,6 +95,45 @@ public class LinkedList {
 //        Node h1 = createList(a);
 //        Node h2 = createList(b);
 //        printList(mergeTwoSortedLinkedLists(h1,h2));
+
+//        int[] a = {1,2,2,3,4,5,5,5};
+//        Node head = createList(a);
+//        head = removeDuplicatedFromSortedLinkedList(head);
+//        printList(head);
+
+        int[] a = {5,4,4,8,5};
+        Node h = createList(a);
+        h = removeDuplicateFromNonSortedLinkedList(h);
+        printList(h);
+    }
+
+    static Node removeDuplicateFromNonSortedLinkedList(Node head){
+        if(head == null) return head;
+        Node curr = head;
+        HashSet<Integer> hs = new HashSet<>();
+        hs.add(curr.data);
+        while(curr.next!=null){
+            if(hs.contains(curr.next.data)){
+                curr.next = curr.next.next;
+            }else{
+                hs.add(curr.next.data);
+                curr = curr.next;
+            }
+        }
+        return head;
+    }
+
+    static Node removeDuplicatedFromSortedLinkedList(Node head){
+        if(head == null) return head;
+        Node curr = head;
+        while(curr.next!=null){
+            if(curr.data == curr.next.data){
+                curr.next = curr.next.next;
+            }else{
+                curr = curr.next;
+            }
+        }
+        return head;
     }
 
     static Node mergeTwoSortedLinkedLists(Node a,Node b){
@@ -153,7 +192,6 @@ public class LinkedList {
         }
         return head2.next;
     }
-
 
     static Node cloneALinkedListWithRandomPointer(Node node){
         HashMap<Node,Node> map = new HashMap<>();
@@ -275,14 +313,12 @@ public class LinkedList {
         return evenHead.next;
     }
 
-
     static void deleteANodeWithTheGivenPointer(Node node){
 //        node is the node to be deleted
 //        node is never the last node
         node.data = node.next.data;
         node.next = node.next.next;
     }
-
 
     static void removeLoopFromTheLinkedList(Node head){
         Node fast = head,slow = head;
@@ -306,8 +342,6 @@ public class LinkedList {
         fast.next = null;
     }
 
-
-
     static boolean detectLoopInALinkedList(Node head){
         Node fast = head,slow=head;
         while (fast!=null && fast.next!=null){
@@ -320,7 +354,6 @@ public class LinkedList {
         }
         return false;
     }
-
 
     static Node reverseLinkedListInGroupsOfKEfficient(Node head,int k){
         Node current = head, prevFirst = null;
@@ -347,7 +380,6 @@ public class LinkedList {
         return head;
     }
 
-
 //    recursive solution
     static Node reverseLinkedListInGroupsOfK(Node head,int k){
         Node prev=null,next=null,current = head;
@@ -366,7 +398,6 @@ public class LinkedList {
         }
         return prev;
     }
-
 
     static Node reverseLinkedList(Node head){
         Node prev=null,next=null,current=head;
