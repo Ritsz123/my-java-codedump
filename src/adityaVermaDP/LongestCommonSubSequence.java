@@ -21,7 +21,13 @@ public class LongestCommonSubSequence {
 
 //        System.out.println(printLongestCommonSubsequence(s1,s2));
 
-        System.out.println(shortestCommonSuperSequence(s1,s2));
+//        System.out.println(shortestCommonSuperSequence(s1,s2));
+
+//        System.out.println(minimumNumberOfInsertionAndDeletionRequiredToMakeAasB("heap","pea"));
+
+//        System.out.println(longestPalindromicSubSequence("abgdcbca"));
+
+        System.out.println(minimumNumberOfDeletionsToMakeTheStringPalindrome("abgdcbca"));
     }
 
     static int longestCommonSubSequenceRecursive(String s1,String s2,int n,int m){
@@ -136,5 +142,28 @@ public class LongestCommonSubSequence {
         int n = s1.length();
         int m = s2.length();
         return n + m - lcsTD(s1,s2,n,m);
+    }
+
+    static int minimumNumberOfInsertionAndDeletionRequiredToMakeAasB(String s1, String s2){
+        int lcs = lcsTD(s1,s2,s1.length(),s2.length());
+        return s1.length()-lcs + s2.length()-lcs;
+    }
+
+    static int longestPalindromicSubSequence(String str) {
+        char[] ar = str.toCharArray();
+        int i = 0,j=ar.length-1;
+        while(i<j){
+            char t = ar[i];
+            ar[i] = ar[j];
+            ar[j] = t;
+            i++;
+            j--;
+        }
+        int lps = lcsTD(str,new String(ar),str.length(),str.length());
+        return lps;
+    }
+
+    static int minimumNumberOfDeletionsToMakeTheStringPalindrome(String str) {
+        return str.length() - longestPalindromicSubSequence(str);
     }
 }
