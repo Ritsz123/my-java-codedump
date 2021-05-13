@@ -101,10 +101,47 @@ public class LinkedList {
 //        head = removeDuplicatedFromSortedLinkedList(head);
 //        printList(head);
 
-        int[] a = {5,4,4,8,5};
-        Node h = createList(a);
-        h = removeDuplicateFromNonSortedLinkedList(h);
-        printList(h);
+//        int[] a = {5,4,4,8,5};
+//        Node h = createList(a);
+//        h = removeDuplicateFromNonSortedLinkedList(h);
+//        printList(h);
+
+        int[] a = {1,2,3,4,5,6,7,8,9};
+        Node head = createList(a);
+        int n = 2;
+        System.out.println(printNthNodeFromEndOfLinkedList(head,n));
+    }
+
+    static int printNthNodeFromEndOfLinkedList(Node head,int n) {
+     // !  Multi traversal
+
+//        Node temp = head;
+//        int count = 0;
+//        while(temp!=null){
+//            count++;
+//            temp = temp.next;
+//        }
+//        temp = head;
+//        int x = 0;
+//        while(x != count-n){
+//            x++;
+//            temp = temp.next;
+//        }
+
+//        return temp.data;
+
+        // ! single traverse
+
+        Node n1 = head, n2 = head;
+        while(n-- > 0) {
+            n1 = n1.next;
+        }
+
+        while(n1!=null){
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        return n2 == null ? -1 : n2.data;
     }
 
     static Node removeDuplicateFromNonSortedLinkedList(Node head){
