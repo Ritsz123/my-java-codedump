@@ -106,10 +106,49 @@ public class LinkedList {
 //        h = removeDuplicateFromNonSortedLinkedList(h);
 //        printList(h);
 
-        int[] a = {1,2,3,4,5,6,7,8,9};
+//        int[] a = {1,2,3,4,5,6,7,8,9};
+//        Node head = createList(a);
+//        int n = 2;
+//        System.out.println(printNthNodeFromEndOfLinkedList(head,n));
+
+//        int[] a = {1,2,3,4};
+//        Node head = createList(a);
+//        int n = 2;
+//        System.out.println(printNthNodeFromEndOfLinkedList(head,n));
+
+
+        int[] a = {25,14,19,33,10,21,39,90,58,45};
         Node head = createList(a);
-        int n = 2;
-        System.out.println(printNthNodeFromEndOfLinkedList(head,n));
+        makeLoopInList(head,3);
+        System.out.println(detectAndFindTheLengthOfLoopInLinkedList(head));
+    }
+
+    static int detectAndFindTheLengthOfLoopInLinkedList(Node head){
+        Node fast = head,slow = head;
+        if (fast ==null || fast.next ==null) return 0;
+        do{
+            fast = fast.next.next;
+            slow = slow.next;
+        } while(fast !=null && fast.next != null && fast != slow);
+
+        if (fast == slow){
+            // * loop found
+          fast = head;
+          while (fast != slow){
+              fast = fast.next;
+              slow = slow.next;
+          }
+
+          int count = 1;
+
+          while (fast.next != slow){
+              fast = fast.next;
+              count++;
+          }
+          return count;
+        } else {
+            return 0;
+        }
     }
 
     static int printNthNodeFromEndOfLinkedList(Node head,int n) {
@@ -417,7 +456,7 @@ public class LinkedList {
         return head;
     }
 
-//    recursive solution
+//    ! recursive solution
     static Node reverseLinkedListInGroupsOfK(Node head,int k){
         Node prev=null,next=null,current = head;
         int c=0;
