@@ -117,10 +117,32 @@ public class LinkedList {
 //        System.out.println(printNthNodeFromEndOfLinkedList(head,n));
 
 
-        int[] a = {25,14,19,33,10,21,39,90,58,45};
-        Node head = createList(a);
-        makeLoopInList(head,3);
-        System.out.println(detectAndFindTheLengthOfLoopInLinkedList(head));
+//        int[] a = {25,14,19,33,10,21,39,90,58,45};
+//        Node head = createList(a);
+//        makeLoopInList(head,3);
+//        System.out.println(detectAndFindTheLengthOfLoopInLinkedList(head));
+
+        int[] a = {2,4,7,8,9};
+        Node head  = createList(a);
+        head = rotateALinkedListByKPositions(head,5);
+        printList(head);
+    }
+
+    static Node rotateALinkedListByKPositions(Node head,int k){
+        if(head == null) return null;
+        Node curr = head,prev = null;
+        while (curr!=null && k-->0){
+            prev = curr;
+            curr = curr.next;
+        }
+        if (curr == null) return head;
+        prev.next = null;
+        Node newHead = curr;
+        while (curr.next!=null){
+            curr = curr.next;
+        }
+        curr.next = head;
+        return newHead;
     }
 
     static int detectAndFindTheLengthOfLoopInLinkedList(Node head){
