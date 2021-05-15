@@ -122,10 +122,48 @@ public class LinkedList {
 //        makeLoopInList(head,3);
 //        System.out.println(detectAndFindTheLengthOfLoopInLinkedList(head));
 
-        int[] a = {2,4,7,8,9};
-        Node head  = createList(a);
-        head = rotateALinkedListByKPositions(head,5);
-        printList(head);
+//        int[] a = {2,4,7,8,9};
+//        Node head  = createList(a);
+//        head = rotateALinkedListByKPositions(head,5);
+//        printList(head);
+
+        int[] a = {4,5};
+        int[] b = {3,4,5};
+        Node a1 = createList(a);
+        Node b1 = createList(b);
+        Node ans = addTwoNumbersRepresentedAsALinkedList(a1,b1);
+        printList(ans);
+    }
+
+    // ! GFG quest
+    static Node addTwoNumbersRepresentedAsALinkedList(Node a,Node b){
+        if (a==null) return b;
+        if (b==null) return a;
+
+        Node dummy = new Node();
+
+        a = reverseLinkedList(a);
+        b = reverseLinkedList(b);
+
+        Node c = dummy;
+        int carry = 0;
+        while(a!=null || b!=null || carry!=0){
+            int sum = 0;
+            if (a != null){
+                sum += a.data;
+                a = a.next;
+            }
+            if (b != null){
+                sum += b.data;
+                b = b.next;
+            }
+            sum += carry;
+            carry = sum/10;
+            sum = sum % 10;
+            c.next = new Node(sum);
+            c=c.next;
+        }
+        return reverseLinkedList(dummy.next);
     }
 
     static Node rotateALinkedListByKPositions(Node head,int k){
