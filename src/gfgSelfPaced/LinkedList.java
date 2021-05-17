@@ -134,9 +134,43 @@ public class LinkedList {
 //        Node ans = addTwoNumbersRepresentedAsALinkedList(a1,b1);
 //        printList(ans);
 
-        int[] a = {1,2,3,3,2,1};
-        Node head = createList(a);
-        System.out.println(checkIfTheLinkedListIsPalindrome(head));
+//        int[] a = {1,2,3,3,2,1};
+//        Node head = createList(a);
+//        System.out.println(checkIfTheLinkedListIsPalindrome(head));
+
+        int[] ar = {0,0,0 };
+        Node head = createList(ar);
+        head = segregateLinkedList(head);
+        printList(head);
+    }
+
+    // ! linked list with data 0 1 2
+    static Node segregateLinkedList(Node head){
+        Node dummy1 = new Node(-1),dummy2 = new Node(-1),dummy3 = new Node(-1);
+        Node a = dummy1,b = dummy2,c = dummy3;
+
+        while (head != null){
+            Node nn = new Node(head.data);
+            if (head.data == 0){
+                a.next = nn;
+                a = a.next;
+            }else if(head.data == 1){
+                b.next = nn;
+                b = b.next;
+            }else{
+                c.next = nn;
+                c = c.next;
+            }
+            head = head.next;
+        }
+        if (dummy2.next != null){
+            a.next = dummy2.next;
+        } else {
+            a.next = dummy3.next;
+        }
+        b.next = dummy3.next;
+
+        return dummy1.next;
     }
 
     static boolean checkIfTheLinkedListIsPalindrome(Node head) {
