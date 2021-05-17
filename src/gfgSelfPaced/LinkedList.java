@@ -127,13 +127,36 @@ public class LinkedList {
 //        head = rotateALinkedListByKPositions(head,5);
 //        printList(head);
 
-        int[] a = {4,5};
-        int[] b = {3,4,5};
-        Node a1 = createList(a);
-        Node b1 = createList(b);
-        Node ans = addTwoNumbersRepresentedAsALinkedList(a1,b1);
-        printList(ans);
+//        int[] a = {4,5};
+//        int[] b = {3,4,5};
+//        Node a1 = createList(a);
+//        Node b1 = createList(b);
+//        Node ans = addTwoNumbersRepresentedAsALinkedList(a1,b1);
+//        printList(ans);
+
+        int[] a = {1,2,3,3,2,1};
+        Node head = createList(a);
+        System.out.println(checkIfTheLinkedListIsPalindrome(head));
     }
+
+    static boolean checkIfTheLinkedListIsPalindrome(Node head) {
+        Node fast = head,slow = head;
+        while (fast != null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        slow = reverseLinkedList(slow);
+        fast = head;
+        while (slow != null){
+            if (slow.data != fast.data) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return true;
+    }
+
 
     // ! GFG quest
     static Node addTwoNumbersRepresentedAsALinkedList(Node a,Node b){
