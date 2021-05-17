@@ -138,10 +138,73 @@ public class LinkedList {
 //        Node head = createList(a);
 //        System.out.println(checkIfTheLinkedListIsPalindrome(head));
 
-        int[] ar = {0,0,0 };
-        Node head = createList(ar);
-        head = segregateLinkedList(head);
+//        int[] ar = {0,0,0,2,2,1,0,2,1,2,0,1,1,2,2 };
+//        Node head = createList(ar);
+//        head = segregateLinkedList(head);
+//        printList(head);
+
+        int[] a = {3,5,2,4,1};
+        Node head = createList(a);
+        head = mergeSortLinkedList(head);
         printList(head);
+    }
+
+    static Node mergeSortLinkedList(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node fast = head;
+        Node slow = head;
+        Node prevSlow = null;
+
+        while (fast != null && fast.next != null) {
+            prevSlow = slow;
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        prevSlow.next = null;
+
+        Node leftSortedNode = mergeSortLinkedList(head);
+        Node rightSortedNode = mergeSortLinkedList(slow);
+
+        return merge(leftSortedNode,rightSortedNode);
+    }
+
+    static Node merge(Node a, Node b) {
+        if (a == null) return b;
+        if (b == null) return a;
+        Node dummy = new Node(0);
+        Node trav = dummy;
+        while (a!=null && b!=null) {
+            if (a.data < b.data) {
+                trav.next = a;
+                a = a.next;
+            }else{
+                trav.next = b;
+                b = b.next;
+            }
+            trav = trav.next;
+        }
+
+        if (a != null) {
+            trav.next = a;
+        }
+        if (b != null) {
+            trav.next = b;
+        }
+        return dummy.next;
+    }
+
+
+    static Node middleOfALinkedList(Node head){
+        Node fast = head,slow = head;
+        if (fast == null) return null;
+        while (fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        return slow;
     }
 
     // ! linked list with data 0 1 2
