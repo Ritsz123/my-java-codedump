@@ -2,8 +2,8 @@ package adityaVermaDP;
 
 public class LongestCommonSubSequence {
     public static void main(String[] args) {
-        String s1 = "sietmr";
-        String s2 = "ritesh";
+        String s1 = "abcdaf";
+        String s2 = "acbcf";
 
 //        System.out.println(longestCommonSubSequenceRecursive(s1,s2,s1.length(),s2.length()));
 
@@ -23,11 +23,13 @@ public class LongestCommonSubSequence {
 
 //        System.out.println(shortestCommonSuperSequence(s1,s2));
 
+        System.out.println(printShortestCommonSuperSequence(s1,s2));
+
 //        System.out.println(minimumNumberOfInsertionAndDeletionRequiredToMakeAasB("heap","pea"));
 
 //        System.out.println(longestPalindromicSubSequence("abgdcbca"));
 
-        System.out.println(minimumNumberOfDeletionsToMakeTheStringPalindrome("abgdcbca"));
+//        System.out.println(minimumNumberOfDeletionsToMakeTheStringPalindrome("abgdcbca"));
     }
 
     static int longestCommonSubSequenceRecursive(String s1,String s2,int n,int m){
@@ -98,6 +100,7 @@ public class LongestCommonSubSequence {
     }
 
     static String printLongestCommonSubsequence(String s1,String s2){
+        // ! LCS TD implementation
         int n = s1.length();
         int m = s2.length();
         int[][] dp = new int[n+1][m+1];
@@ -111,11 +114,13 @@ public class LongestCommonSubSequence {
                 }
             }
         }
-        String str = "";
+
+        //! print LCS
+        StringBuilder str = new StringBuilder();
         int i = n,j=m;
         while(i>0 && j>0){
             if (s1.charAt(i-1) == s2.charAt(j-1)){
-                str+=s1.charAt(i-1);
+                str.append(s1.charAt(i - 1));
                 i--;
                 j--;
             }else{
@@ -126,22 +131,60 @@ public class LongestCommonSubSequence {
                 }
             }
         }
-        char[] ar = str.toCharArray();
-        i=0;j=ar.length-1;
-        while (i<j){
-            char t = ar[i];
-            ar[i] = ar[j];
-            ar[j] = t;
-            i++;
-            j--;
-        }
-        return new String(ar);
+
+        return str.reverse().toString();
     }
 
     static int shortestCommonSuperSequence(String s1,String s2){
         int n = s1.length();
         int m = s2.length();
         return n + m - lcsTD(s1,s2,n,m);
+    }
+
+    static String printShortestCommonSuperSequence(String s1, String s2) {
+        // ! LCS TD implementation
+        int[][] dp = new int[s1.length()+1][s2.length()+1];
+
+        for (int i=1;i<=s1.length();i++){
+            for (int j = 1;j<=s2.length();j++){
+                if (s1.charAt(i-1) == s2.charAt(j-1)){
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]) + 1;
+                }else{
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+
+        // ! print scs
+        StringBuilder ans = new StringBuilder();
+        int i = s1.length(), j = s2.length();
+        while (i>0 && j>0) {
+            if (s1.charAt(i-1) == s2.charAt(j-1)){
+                ans.append(s1.charAt(i - 1));
+                i--;
+                j--;
+            }else{
+                if (dp[i-1][j] > dp[i][j-1]){
+                    ans.append(s1.charAt(i - 1));
+                    i--;
+                }else{
+                    ans.append(s2.charAt(j-1));
+                    j--;
+                }
+            }
+        }
+
+        while (i>0){
+            ans.append(s1.charAt(i-1));
+            i--;
+        }
+
+        while (j>0){
+            ans.append(s2.charAt(j-1));
+            j--;
+        }
+        return ans.reverse().toString();
+
     }
 
     static int minimumNumberOfInsertionAndDeletionRequiredToMakeAasB(String s1, String s2){
