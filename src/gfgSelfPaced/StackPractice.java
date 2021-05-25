@@ -30,7 +30,27 @@ public class StackPractice {
 
 //        System.out.println(largestRectangularAreaEfficient(arr));
 
-        designAStackSupportingGetMinAndGetMaxOperation();
+//        designAStackSupportingGetMinAndGetMaxOperation();
+        Stack<Integer> st = new Stack<>();
+        for (int i = 1;i<=6;i++){
+            st.push(i);
+        }
+        deleteMiddleElement(st,6,6);
+        while (!st.isEmpty()){
+            System.out.print(st.pop() + " ");
+        }
+    }
+
+    static void deleteMiddleElement(Stack<Integer> st,int size,int curr){
+        if (curr == 0){
+            return;
+        }
+        int mid = (size+1)/2;
+        int x = st.pop();
+        deleteMiddleElement(st,size,curr-1);
+        if (curr != mid){
+            st.push(x);
+        }
     }
 
     static void designAStackSupportingGetMinAndGetMaxOperation(){
@@ -70,10 +90,11 @@ public class StackPractice {
     }
 
     static int largestRectangularAreaBetter(int[] arr){
-//        find previous smaller element for every element of array
-//        find next smaller element for every element
-//        for every element
-//        ans += arr[i] + (i-prev[i] -1) * arr[i]  + (next[i]-i -1) * arr[i]
+//     !  find previous smaller element for every element of array
+//     *  find next smaller element for every element
+//     *  for every element
+//     *  ans += arr[i] + (i-prev[i] -1) * arr[i]  + (next[i] - i -1) * arr[i]
+
         Stack<Integer> st = new Stack<>();
         int[] prev = new int[arr.length];
         int[] next = new int[arr.length];
@@ -105,8 +126,8 @@ public class StackPractice {
         int max = 0;
         for (int i=0;i<arr.length;i++){
             int curr = arr[i];
-            curr+= (i-prev[i] -1) * arr[i];
-            curr+= (next[i]-i-1) * arr[i];
+            curr += (i-prev[i] -1) * arr[i];
+            curr += (next[i] -i -1) * arr[i];
             max = Math.max(max,curr);
         }
         return max;
