@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class StackPractice {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 //        Implement two stacks in an array
 //        implementTwoStacksInASingleArray();
 
@@ -31,13 +31,62 @@ public class StackPractice {
 //        System.out.println(largestRectangularAreaEfficient(arr));
 
 //        designAStackSupportingGetMinAndGetMaxOperation();
-        Stack<Integer> st = new Stack<>();
-        for (int i = 1;i<=6;i++){
-            st.push(i);
+//        Stack<Integer> st = new Stack<>();
+//        for (int i = 1;i<=6;i++){
+//            st.push(i);
+//        }
+//        deleteMiddleElement(st,6,6);
+//        while (!st.isEmpty()){
+//            System.out.print(st.pop() + " ");
+//        }
+
+        String infix = "a^b^c";
+        System.out.println(infix + " " + infixToPostfix(infix));
+
+    }
+
+    static String infixToPostfix(String str) throws Exception {
+        Stack<Character> st = new Stack<>();
+        StringBuilder ans = new StringBuilder();
+
+        for (int i = 0;i< str.length();i++){
+            char ch = str.charAt(i);
+
+            if (Character.isLetterOrDigit(ch)){
+                ans.append(ch);
+            }else if (ch == '('){
+                st.push(ch);
+            }else if (ch == ')'){
+                while (st.peek() != '('){
+                    ans.append(st.pop());
+                }
+                st.pop();
+            } else {
+                while (!st.isEmpty() && prec(ch) <= prec(st.peek())){
+                    ans.append(st.pop());
+                }
+                st.push(ch);
+            }
         }
-        deleteMiddleElement(st,6,6);
+
         while (!st.isEmpty()){
-            System.out.print(st.pop() + " ");
+            if (st.peek() =='('){
+                throw new Exception("Invalid Infix Expression");
+            }
+            ans.append(st.pop());
+        }
+
+        return ans.toString();
+    }
+
+    static int prec (char ch){
+        switch(ch){
+            case '+' :
+            case '-' : return 1;
+            case '*' :
+            case '/' : return 2;
+            case '^' : return 3;
+            default: return -1;
         }
     }
 
