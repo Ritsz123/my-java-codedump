@@ -13,7 +13,7 @@ public class StackPractice {
         int[] arr2 = {20,30,10,5,15};
 //        stockSpanProblem(arr);
 
-        int[] arr = {6,2,5,4,1,5,6};
+        int[] arr = {6,2,5,4,5,1,6};
 
 //        prevGreaterElementInAnArray(arr1);
 //
@@ -25,8 +25,6 @@ public class StackPractice {
 
 //        System.out.println(largestRectangularArea(arr));
 
-        // incorrect answer
-//        System.out.println(largestRectangularAreaBetter(arr));
 
 //        System.out.println(largestRectangularAreaEfficient(arr));
 
@@ -43,9 +41,10 @@ public class StackPractice {
 //        String infix = "a^b^c";
 //        System.out.println(infix + " " + infixToPostfix(infix));
 
-        String postfix = "123+*8-";
-        System.out.println(evaluationOfPostfixExpression(postfix));
+//        String postfix = "123+*8-";
+//        System.out.println(evaluationOfPostfixExpression(postfix));
 
+        System.out.println(largestRectangularAreaBetter(arr));
     }
 
     static int evaluationOfPostfixExpression(String str) throws Exception {
@@ -170,9 +169,7 @@ public class StackPractice {
 
     static int largestRectangularAreaBetter(int[] arr){
 //     !  find previous smaller element for every element of array
-//     *  find next smaller element for every element
-//     *  for every element
-//     *  ans += arr[i] + (i-prev[i] -1) * arr[i]  + (next[i] - i -1) * arr[i]
+//     !  find next smaller element for every element
 
         Stack<Integer> st = new Stack<>();
         int[] prev = new int[arr.length];
@@ -198,15 +195,18 @@ public class StackPractice {
             st.push(i);
         }
 
-        for (int i=0;i<arr.length;i++){
-            System.out.println(prev[i] + " " + next[i]);
+//        for (int i=0;i<arr.length;i++){
+//            System.out.println(prev[i] + " " + next[i]);
+//        }
+
+        int[] width = new int[arr.length];
+        for (int i = 0;i<arr.length;i++){
+            width[i] = next[i] - prev[i] - 1;
         }
 
         int max = 0;
         for (int i=0;i<arr.length;i++){
-            int curr = arr[i];
-            curr += (i-prev[i] -1) * arr[i];
-            curr += (next[i] -i -1) * arr[i];
+            int curr = width[i] * arr[i];
             max = Math.max(max,curr);
         }
         return max;
