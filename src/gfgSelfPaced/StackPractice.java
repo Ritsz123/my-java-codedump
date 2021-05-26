@@ -40,9 +40,39 @@ public class StackPractice {
 //            System.out.print(st.pop() + " ");
 //        }
 
-        String infix = "a^b^c";
-        System.out.println(infix + " " + infixToPostfix(infix));
+//        String infix = "a^b^c";
+//        System.out.println(infix + " " + infixToPostfix(infix));
 
+        String postfix = "123+*8-";
+        System.out.println(evaluationOfPostfixExpression(postfix));
+
+    }
+
+    static int evaluationOfPostfixExpression(String str) throws Exception {
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0;i<str.length();i++){
+            char ch = str.charAt(i);
+            if (Character.isDigit(ch)){
+                st.push(Character.getNumericValue(ch));
+            }else{
+                int num1 = st.pop(), num2 = st.pop();
+                int ans;
+                if (ch == '-'){
+                    ans = num2 - num1;
+                }else if (ch == '+'){
+                    ans = num2 + num1;
+                }else if (ch == '*'){
+                    ans = num2 * num1;
+                }else {
+                    ans = num2 / num1;
+                }
+                st.push(ans);
+            }
+        }
+        if (st.size() > 1){
+            throw new Exception("Invalid state");
+        }
+        return st.pop();
     }
 
     static String infixToPostfix(String str) throws Exception {
