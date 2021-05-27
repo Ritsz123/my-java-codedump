@@ -13,7 +13,7 @@ public class StackPractice {
         int[] arr2 = {20,30,10,5,15};
 //        stockSpanProblem(arr);
 
-        int[] arr = {6,2,5,4,5,1,6};
+        int[] arr = {1,2,3,4,5};
 
 //        prevGreaterElementInAnArray(arr1);
 //
@@ -25,6 +25,7 @@ public class StackPractice {
 
 //        System.out.println(largestRectangularArea(arr));
 
+        System.out.println(largestRectangularAreaBetter(arr));
 
 //        System.out.println(largestRectangularAreaEfficient(arr));
 
@@ -44,7 +45,6 @@ public class StackPractice {
 //        String postfix = "123+*8-";
 //        System.out.println(evaluationOfPostfixExpression(postfix));
 
-        System.out.println(largestRectangularAreaBetter(arr));
     }
 
     static int evaluationOfPostfixExpression(String str) throws Exception {
@@ -184,7 +184,7 @@ public class StackPractice {
             st.push(i);
         }
 
-        st.empty();
+        st.clear();
 
         for (int i = arr.length-1;i>=0;i--){
             while (!st.isEmpty() && arr[st.peek()] >= arr[i]){
