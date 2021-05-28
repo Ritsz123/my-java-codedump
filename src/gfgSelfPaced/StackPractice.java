@@ -25,7 +25,7 @@ public class StackPractice {
 
 //        System.out.println(largestRectangularArea(arr));
 
-        System.out.println(largestRectangularAreaBetter(arr));
+//        System.out.println(largestRectangularAreaBetter(arr));
 
 //        System.out.println(largestRectangularAreaEfficient(arr));
 
@@ -45,6 +45,43 @@ public class StackPractice {
 //        String postfix = "123+*8-";
 //        System.out.println(evaluationOfPostfixExpression(postfix));
 
+        int[][] mat = {
+                { 0,0,1,1 },
+                { 1,0,1,0 },
+                { 0,0,0,0 },
+                { 1,1,1,0 }
+        };
+
+        System.out.println(findCelebrity(mat));
+    }
+
+    static int findCelebrity(int [][] m) {
+        Stack<Integer> st = new Stack<>();
+        for (int i= 0;i<m.length;i++){
+            st.push(i);
+        }
+
+        while (st.size() > 1){
+            int x = st.pop();
+            int y = st.pop();
+
+            // x knows y ?
+            if (m[x][y] == 1) {
+                // yes
+                //then x cannot be celeb
+                st.push(y);
+            } else {
+                // x can be celeb
+                st.push(x);
+            }
+        }
+        int c = st.pop();
+        for (int i = 0;i<m.length;i++){
+            if (i != c && m[c][i] != 0 && m[i][c] != 1){
+                return -1;
+            }
+        }
+        return c;
     }
 
     static int evaluationOfPostfixExpression(String str) throws Exception {
