@@ -31,8 +31,13 @@ public class LongestCommonSubSequence {
 
 //        System.out.println(minimumNumberOfDeletionsToMakeTheStringPalindrome("abgdcbca"));
 
-        System.out.println(longestRepeatingSubSequence("abcabec"));
+//        System.out.println(longestRepeatingSubSequence("abcabec"));
+
+//        System.out.println(sequencePatternMatching("aebca","abd"));
+
+        System.out.println(minimumNumberOfInsertionsToMakeStringPalindrome("aebca"));
     }
+
 
     static int longestCommonSubSequenceRecursive(String s1,String s2,int n,int m){
         if(n==0 || m==0) return 0;
@@ -228,5 +233,16 @@ public class LongestCommonSubSequence {
             }
         }
         return dp[s1.length()][s2.length()];
+    }
+
+    static boolean sequencePatternMatching(String str, String pattern) {
+        int l = lcsTD(str,pattern,str.length(),pattern.length());
+        if (l == pattern.length()) return true;
+        return false;
+    }
+
+    static int minimumNumberOfInsertionsToMakeStringPalindrome(String str) {
+        int l = longestPalindromicSubSequence(str);
+        return str.length() - l;
     }
 }
