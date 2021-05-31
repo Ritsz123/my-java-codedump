@@ -20,10 +20,20 @@ package striversGraphSeries;
         for every input of m go to arraylist[U] & add V, arraylist[V] & add U
 */
 
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+
+class Node {
+    int curr;
+    int parent;
+    Node(int curr,int parent){
+        this.curr = curr;
+        this.parent = parent;
+    }
+}
 
 class Graph {
     private final ArrayList<ArrayList<Integer>> adj;
@@ -68,6 +78,28 @@ class Graph {
         return ans;
     }
 
+    public boolean detectCycleBFS(int start, ArrayList<ArrayList<Integer>> adj, boolean[] visited){
+        Queue<Node> q = new LinkedList<>();
+
+        visited[start] = true;
+        q.add(new Node(start,-1)); //as initial node does not have parent
+
+        while (!q.isEmpty()){
+            Node current = q.poll();
+            for (Integer it: adj.get(current.curr)) {
+                if (!visited[it]){
+                    q.add(new Node(it, current.curr));
+                    visited[it] = true;
+                } else {
+                    if (it != current.parent){
+                        // ! Cycle is found....
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
 
 public class GraphRepresentation {
@@ -88,7 +120,9 @@ public class GraphRepresentation {
         for(int i = 0;i<m;i++){
             int u = sc.nextInt();
             int v = sc.nextInt();
+            //as it is undirected graph
             adj.get(u).add(v);
+            adj.get(v).add(u);
         }
 
         // * start BFS
@@ -117,5 +151,16 @@ public class GraphRepresentation {
                 }
             }
         }
+
+        //! detect cycle in graph using bfs
+        boolean isCycle = false;
+        boolean[] visitedCycleBFs = new boolean[n+1];
+        for (int i = 1;i<=n;i++){
+            if (!visitedCycleBFs[i]) {
+                isCycle = isCycle || g.detectCycleBFS(i,adj,visitedCycleBFs);
+            }
+        }
+
+        System.out.println("\nisCycle : " + isCycle);
     }
 }
