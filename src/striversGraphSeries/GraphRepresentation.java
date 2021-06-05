@@ -100,6 +100,18 @@ class Graph {
         }
         return false;
     }
+
+    public boolean detectCycleDFS(int start, int parent,boolean[] visited, ArrayList<ArrayList<Integer>> adj) {
+        visited[start] = true;
+        for (Integer it: adj.get(start)){
+            if (visited[it]){
+                if (it != parent) return true;
+            }else{
+                return detectCycleDFS(it,start,visited,adj);
+            }
+        }
+        return false;
+    }
 }
 
 public class GraphRepresentation {
@@ -162,5 +174,16 @@ public class GraphRepresentation {
         }
 
         System.out.println("\nisCycle : " + isCycle);
+
+        //! detect cycle DFS
+        boolean[] visitedCycleDFS = new boolean[n+1];
+        boolean isCycleDFS = false;
+        for (int i = 1;i <= n;i++){
+            if (!visitedCycleDFS[i]){
+                isCycleDFS =  g.detectCycleDFS(i,-1,visitedCycleDFS, adj);
+                if (isCycleDFS) break;
+            }
+        }
+        System.out.println("is cycle DFS :" + isCycleDFS);
     }
 }
