@@ -136,6 +136,21 @@ class Graph {
         }
         return true;
     }
+
+    public boolean checkBipartiteDFS(int curr, ArrayList<ArrayList<Integer>> adj, int[] colors){
+        if (colors[curr] == -1){
+            colors[curr] = 0;
+        }
+        for (int x: adj.get(curr)){
+            if (colors[x] == -1){
+                colors[x] = 1 - colors[curr];
+                if(!checkBipartiteDFS(x,adj,colors)) return false;
+            }else if (colors[x] == colors[curr]){
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 public class GraphRepresentation {
@@ -174,7 +189,11 @@ public class GraphRepresentation {
         //! detect cycle DFS
 //        detectCycle(n,adj,Traverse.DFS,g);
 
-        checkBipartite(n,adj,g);
+        //! check if graph is Bipartite bfs
+        checkBipartite(n, adj,Traverse.BFS, g);
+
+        //! check if graph is Bipartite dfs
+        checkBipartite(n, adj, Traverse.DFS, g);
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -214,7 +233,7 @@ public class GraphRepresentation {
         System.out.println("\nisCycle using " + t + " : " + isCycle);
     }
 
-    static void checkBipartite(int n, ArrayList<ArrayList<Integer>> adj, Graph g) {
+    static void checkBipartite(int n, ArrayList<ArrayList<Integer>> adj, Traverse t, Graph g) {
         int[] color = new int[n+1];
         for (int i = 1;i<=n;i++){
             color[i] = -1;
@@ -222,13 +241,13 @@ public class GraphRepresentation {
         boolean isBipartite = true;
         for (int i = 1;i<=n;i++){
             if (color[i] == -1){
-                if(!g.checkBipartiteBFS(i,adj,color)){
+                if(!g.checkBipartiteDFS(i,adj,color)) {
                     isBipartite = false;
                     break;
                 }
             }
         }
-        System.out.println("\nisBipartite :" + isBipartite);
+        System.out.println("\nisBipartite using " + t + " : " + isBipartite);
     }
 }
 
