@@ -116,6 +116,25 @@ class Graph {
         }
         return false;
     }
+
+    public boolean checkBipartiteBFS(int start, ArrayList<ArrayList<Integer>> adj, int[] colors) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
+        colors[start] = 0;
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            for (int x: adj.get(curr)){
+                if (colors[x] == -1){
+                    q.add(x);
+                }else{
+                    if (colors[x] == colors[curr]){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 }
 
 public class GraphRepresentation {
@@ -136,7 +155,7 @@ public class GraphRepresentation {
         for(int i = 0;i<m;i++){
             int u = sc.nextInt();
             int v = sc.nextInt();
-            //as it is undirected graph
+            // !as it is undirected graph
             adj.get(u).add(v);
             adj.get(v).add(u);
         }
@@ -144,15 +163,17 @@ public class GraphRepresentation {
         Graph g = new Graph(adj);
 
         // * start BFS
-        traverseGraph(n, Traverse.BFS, g);
+//        traverseGraph(n, Traverse.BFS, g);
         // * Start DFS
-        traverseGraph(n, Traverse.DFS, g);
+//        traverseGraph(n, Traverse.DFS, g);
 
         //! detect cycle in graph using bfs
-        detectCycle(n,adj,Traverse.BFS, g);
+//        detectCycle(n,adj,Traverse.BFS, g);
 
         //! detect cycle DFS
-        detectCycle(n,adj,Traverse.DFS,g);
+//        detectCycle(n,adj,Traverse.DFS,g);
+
+        checkBipartite(n,adj,g);
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -190,6 +211,17 @@ public class GraphRepresentation {
         }
 
         System.out.println("\nisCycle using " + t + " : " + isCycle);
+    }
+
+    static void checkBipartite(int n, ArrayList<ArrayList<Integer>> adj, Graph g) {
+        int[] color = new int[n+1];
+        boolean isBipartite = true;
+        for (int i = 1;i<=n;i++){
+            if (color[i] == -1){
+                isBipartite =  isBipartite && g.checkBipartiteBFS(i,adj,color);
+            }
+        }
+        System.out.println("\nisBipartite :" + isBipartite);
     }
 }
 
