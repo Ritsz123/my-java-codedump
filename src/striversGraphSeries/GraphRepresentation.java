@@ -151,15 +151,34 @@ class Graph {
         }
         return true;
     }
+
+    public boolean detectCycleInDirectedGraph(int curr, ArrayList<ArrayList<Integer>> adj,int[] visited, int[] dfsVisited){
+        visited[curr] = 1;
+        dfsVisited[curr] = 1;
+        for (int x: adj.get(curr)){
+            if (visited[x] == 0){
+                if(detectCycleInDirectedGraph(x, adj, visited, dfsVisited)){
+                    return true;
+                }
+            }else if (dfsVisited[x] == 1){
+                return true;
+            }
+        }
+        dfsVisited[curr] = 0;
+        return false;
+    }
 }
 
 public class GraphRepresentation {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Scanner sc = new Scanner(System.in);
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
         //! input
         // n m
+        System.out.println("Choose Graph type : \n1: Undirected Graph \n2: Directed Graph");
+        int graphType = sc.nextInt();
+        System.out.println("Enter number of nodes & vertices");
         int n = sc.nextInt();
         int m = sc.nextInt();
 
@@ -171,9 +190,12 @@ public class GraphRepresentation {
         for(int i = 0;i<m;i++){
             int u = sc.nextInt();
             int v = sc.nextInt();
-            // !as it is undirected graph
+
             adj.get(u).add(v);
-            adj.get(v).add(u);
+            if(graphType == 1) {
+                //! Undirected graph
+                adj.get(v).add(u);
+            }
         }
 
         Graph g = new Graph(adj);
@@ -190,10 +212,13 @@ public class GraphRepresentation {
 //        detectCycle(n,adj,Traverse.DFS,g);
 
         //! check if graph is Bipartite bfs
-        checkBipartite(n, adj,Traverse.BFS, g);
+//        checkBipartite(n, adj,Traverse.BFS, g);
 
         //! check if graph is Bipartite dfs
-        checkBipartite(n, adj, Traverse.DFS, g);
+//        checkBipartite(n, adj, Traverse.DFS, g);
+
+        //! detect cycle in directed graph
+        detectCycleInDirectedGraph(n, adj, g, graphType);
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -249,10 +274,33 @@ public class GraphRepresentation {
         }
         System.out.println("\nisBipartite using " + t + " : " + isBipartite);
     }
+
+    private static void detectCycleInDirectedGraph(int n, ArrayList<ArrayList<Integer>> adj, Graph g, int graphType) throws Exception {
+        if (graphType == 1){
+            throw new Exception("This method only works on directed graph");
+        }
+
+        int[] visited = new int[n+1];
+        int[] dfsVisited = new int[n+1];
+        boolean isCycle = false;
+
+        for (int i = 1;i<=n;i++){
+            if (visited[i] == 0){
+                isCycle = g.detectCycleInDirectedGraph(i,adj,visited,dfsVisited);
+                if (isCycle){
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Is cycle in directed graph : " + isCycle);
+    }
 }
 
 //input
 
+// * undirected
+//1
 //11 10
 //1 2
 //2 4
@@ -265,3 +313,13 @@ public class GraphRepresentation {
 //10 7
 //7 10
 //7 11
+
+// * directed
+//2
+//5 6
+//1 2
+//2 3
+//3 4
+//4 5
+//5 1
+//1 3
