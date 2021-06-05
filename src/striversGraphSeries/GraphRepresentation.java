@@ -126,6 +126,7 @@ class Graph {
             for (int x: adj.get(curr)){
                 if (colors[x] == -1){
                     q.add(x);
+                    colors[x] = 1 - colors[curr];
                 }else{
                     if (colors[x] == colors[curr]){
                         return false;
@@ -215,10 +216,16 @@ public class GraphRepresentation {
 
     static void checkBipartite(int n, ArrayList<ArrayList<Integer>> adj, Graph g) {
         int[] color = new int[n+1];
+        for (int i = 1;i<=n;i++){
+            color[i] = -1;
+        }
         boolean isBipartite = true;
         for (int i = 1;i<=n;i++){
             if (color[i] == -1){
-                isBipartite =  isBipartite && g.checkBipartiteBFS(i,adj,color);
+                if(!g.checkBipartiteBFS(i,adj,color)){
+                    isBipartite = false;
+                    break;
+                }
             }
         }
         System.out.println("\nisBipartite :" + isBipartite);
