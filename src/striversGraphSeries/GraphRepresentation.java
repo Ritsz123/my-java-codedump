@@ -20,11 +20,15 @@ package striversGraphSeries;
         for every input of m go to arraylist[U] & add V, arraylist[V] & add U
 */
 
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+
+enum Traverse {
+    DFS,
+    BFS
+}
 
 class Node {
     int curr;
@@ -137,53 +141,69 @@ public class GraphRepresentation {
             adj.get(v).add(u);
         }
 
-        // * start BFS
         Graph g = new Graph(adj);
-        boolean[] visitedBFs = new boolean[n+1];
-        System.out.println("Using BFS...");
-        for(int i = 1;i<=n;i++) {
-            if(!visitedBFs[i]){
-                ArrayList<Integer> al = g.BFS(i,visitedBFs);
 
-                for (Integer it: al){
-                    System.out.print(it + " ");
-                }
-            }
-        }
-
+        // * start BFS
+        traverseGraph(n, Traverse.BFS, g);
         // * Start DFS
-        System.out.println("\nUsing DFS...");
-        boolean[] visited = new boolean[n+1];
-        for (int i = 1;i<=n;i++){
-            if (!visited[i]){
-                ArrayList<Integer> al = g.DFS(i,visited);
-
-                for (Integer it: al){
-                    System.out.print(it + " ");
-                }
-            }
-        }
+        traverseGraph(n, Traverse.DFS, g);
 
         //! detect cycle in graph using bfs
-        boolean isCycle = false;
-        boolean[] visitedCycleBFs = new boolean[n+1];
-        for (int i = 1;i<=n;i++){
-            if (!visitedCycleBFs[i]) {
-                isCycle = isCycle || g.detectCycleBFS(i,adj,visitedCycleBFs);
-            }
-        }
-
-        System.out.println("\nisCycle : " + isCycle);
+        detectCycle(n,adj,Traverse.BFS, g);
 
         //! detect cycle DFS
-        boolean[] visitedCycleDFS = new boolean[n+1];
-        boolean isCycleDFS = false;
-        for (int i = 1;i <= n;i++){
-            if (!visitedCycleDFS[i]){
-                isCycleDFS =  g.detectCycleDFS(i,-1,visitedCycleDFS, adj);
-                if (isCycleDFS) break;
+        detectCycle(n,adj,Traverse.DFS,g);
+    }
+
+    static void traverseGraph(int n, Traverse t, Graph g) {
+        System.out.println("\nUsing " + t + " traversal...");
+
+        boolean[] visited = new boolean[n+1];
+        for(int i = 1;i<=n;i++) {
+            if(!visited[i]){
+                ArrayList<Integer> al;
+                if (t == Traverse.BFS){
+                     al = g.BFS(i,visited);
+                }else{
+                     al = g.DFS(i,visited);
+                }
+
+                for (Integer it: al){
+                    System.out.print(it + " ");
+                }
             }
         }
-        System.out.println("is cycle DFS :" + isCycleDFS);
+    }
+
+    static void detectCycle(int n, ArrayList<ArrayList<Integer>> adj, Traverse t, Graph g) {
+        boolean isCycle = false;
+        boolean[] visited = new boolean[n+1];
+        for (int i = 1;i<=n;i++){
+            if (!visited[i]) {
+                if (t == Traverse.BFS){
+                    isCycle = g.detectCycleBFS(i,adj,visited);
+                } else if (t == Traverse.DFS){
+                    isCycle = g.detectCycleDFS(i,-1,visited,adj);
+                }
+                if (isCycle) break;
+            }
+        }
+
+        System.out.println("\nisCycle using " + t + " : " + isCycle);
     }
 }
+
+//input
+
+//11 10
+//1 2
+//2 4
+//3 5
+//5 8
+//5 6
+//6 7
+//8 9
+//9 10
+//10 7
+//7 10
+//7 11
