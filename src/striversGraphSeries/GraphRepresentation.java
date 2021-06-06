@@ -20,10 +20,7 @@ package striversGraphSeries;
         for every input of m go to arraylist[U] & add V, arraylist[V] & add U
 */
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 enum Traverse {
     DFS,
@@ -167,6 +164,16 @@ class Graph {
         dfsVisited[curr] = 0;
         return false;
     }
+
+    public void topologicalSortDFS(int curr, ArrayList<ArrayList<Integer>> adj, boolean[] visited, Stack<Integer> st){
+        visited[curr] = true;
+        for (int x : adj.get(curr)){
+            if (!visited[x]){
+                topologicalSortDFS(x, adj, visited, st);
+            }
+        }
+        st.push(curr);
+    }
 }
 
 public class GraphRepresentation {
@@ -218,7 +225,10 @@ public class GraphRepresentation {
 //        checkBipartite(n, adj, Traverse.DFS, g);
 
         //! detect cycle in directed graph
-        detectCycleInDirectedGraph(n, adj, g, graphType);
+//        detectCycleInDirectedGraph(n, adj, g, graphType);
+
+        //! topological sort order DFS
+        topologicalSortOrderOfGraph(n, adj, Traverse.DFS, g, graphType);
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -275,7 +285,7 @@ public class GraphRepresentation {
         System.out.println("\nisBipartite using " + t + " : " + isBipartite);
     }
 
-    private static void detectCycleInDirectedGraph(int n, ArrayList<ArrayList<Integer>> adj, Graph g, int graphType) throws Exception {
+    static void detectCycleInDirectedGraph(int n, ArrayList<ArrayList<Integer>> adj, Graph g, int graphType) throws Exception {
         if (graphType == 1){
             throw new Exception("This method only works on directed graph");
         }
@@ -294,6 +304,27 @@ public class GraphRepresentation {
         }
 
         System.out.println("Is cycle in directed graph : " + isCycle);
+    }
+
+    static void topologicalSortOrderOfGraph(int n, ArrayList<ArrayList<Integer>> adj, Traverse t, Graph g, int graphType) throws Exception {
+        if (graphType != 2) {
+            throw new Exception("Only allowed on Directed Graph..");
+        }
+
+        boolean[] visited = new boolean[n+1];
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 1;i<=n;i++) {
+            if(!visited[i]){
+                g.topologicalSortDFS(i, adj, visited, st);
+            }
+        }
+
+        System.out.println("Topological order using " + t);
+
+        while (!st.isEmpty()){
+            System.out.print(st.pop() + " ");
+        }
     }
 }
 
