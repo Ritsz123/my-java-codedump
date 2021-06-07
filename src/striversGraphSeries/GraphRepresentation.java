@@ -149,12 +149,12 @@ class Graph {
         return true;
     }
 
-    public boolean detectCycleInDirectedGraph(int curr, ArrayList<ArrayList<Integer>> adj,int[] visited, int[] dfsVisited){
+    public boolean detectCycleInDirectedGraphDFS(int curr, ArrayList<ArrayList<Integer>> adj, int[] visited, int[] dfsVisited){
         visited[curr] = 1;
         dfsVisited[curr] = 1;
         for (int x: adj.get(curr)){
             if (visited[x] == 0){
-                if(detectCycleInDirectedGraph(x, adj, visited, dfsVisited)){
+                if(detectCycleInDirectedGraphDFS(x, adj, visited, dfsVisited)){
                     return true;
                 }
             }else if (dfsVisited[x] == 1){
@@ -163,6 +163,35 @@ class Graph {
         }
         dfsVisited[curr] = 0;
         return false;
+    }
+
+    public boolean detectCycleInDirectedGraphBFS(ArrayList<ArrayList<Integer>> adj, int n) {
+        int[] indegree = new int[n+1];
+        for (int i=1;i<=n;i++){
+            for (int x : adj.get(i)){
+                indegree[x]++;
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 1;i<=n;i++){
+            if (indegree[i] == 0){
+                q.add(i);
+            }
+        }
+        int count = 0;
+        while (!q.isEmpty()){
+            int curr = q.poll();
+            count++;
+            for (int x:adj.get(curr)){
+                indegree[x]--;
+                if (indegree[x] == 0){
+                    q.add(x);
+                }
+            }
+        }
+        if (count == n) return false;
+        return true;
     }
 
     public void topologicalSortDFS(int curr, ArrayList<ArrayList<Integer>> adj, boolean[] visited, Stack<Integer> st){
@@ -252,15 +281,19 @@ public class GraphRepresentation {
         //! check if graph is Bipartite dfs
 //        checkBipartite(n, adj, Traverse.DFS, g);
 
-        //! detect cycle in directed graph
+        //! detect cycle in directed graph DFS
 //        detectCycleInDirectedGraph(n, adj, g, graphType);
+
+        // detect cycle in directed graph BFS
+        System.out.println("is cycle directed BFS " + g.detectCycleInDirectedGraphBFS(adj,n));
 
         //! topological sort order DFS
 //        topologicalSortOrderOfGraph(n, adj, Traverse.DFS, g, graphType);
 
         //!topological sort order bfs
         //also known as kahn's algorithm
-        topologicalSortOrderBFS(n,adj,g);
+//        topologicalSortOrderBFS(n,adj,g);
+
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -328,7 +361,7 @@ public class GraphRepresentation {
 
         for (int i = 1;i<=n;i++){
             if (visited[i] == 0){
-                isCycle = g.detectCycleInDirectedGraph(i,adj,visited,dfsVisited);
+                isCycle = g.detectCycleInDirectedGraphDFS(i,adj,visited,dfsVisited);
                 if (isCycle){
                     break;
                 }
