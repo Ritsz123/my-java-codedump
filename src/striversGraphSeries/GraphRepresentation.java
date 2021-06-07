@@ -174,6 +174,34 @@ class Graph {
         }
         st.push(curr);
     }
+
+    public ArrayList<Integer> topologicalSortBFS(ArrayList<ArrayList<Integer>> adj, int n){
+        int[] inDegree = new int[n+1];
+        for (int i = 1;i<=n;i++){
+            for (int x: adj.get(i)){
+                inDegree[x]++;
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i=1;i<=n;i++){
+            if (inDegree[i] == 0){
+                q.add(i);
+            }
+        }
+        ArrayList<Integer> topoSort = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            topoSort.add(curr);
+            for (int x: adj.get(curr)){
+                inDegree[x]--;
+                if (inDegree[x] == 0){
+                    q.add(x);
+                }
+            }
+        }
+        return topoSort;
+    }
 }
 
 public class GraphRepresentation {
@@ -228,7 +256,11 @@ public class GraphRepresentation {
 //        detectCycleInDirectedGraph(n, adj, g, graphType);
 
         //! topological sort order DFS
-        topologicalSortOrderOfGraph(n, adj, Traverse.DFS, g, graphType);
+//        topologicalSortOrderOfGraph(n, adj, Traverse.DFS, g, graphType);
+
+        //!topological sort order bfs
+        //also known as kahn's algorithm
+        topologicalSortOrderBFS(n,adj,g);
     }
 
     static void traverseGraph(int n, Traverse t, Graph g) {
@@ -326,6 +358,14 @@ public class GraphRepresentation {
             System.out.print(st.pop() + " ");
         }
     }
+
+    static void topologicalSortOrderBFS(int n, ArrayList<ArrayList<Integer>> adj, Graph g){
+        ArrayList<Integer> toposeq = g.topologicalSortBFS(adj, n);
+        System.out.println("Topo sort using BFS: ");
+        for (int x: toposeq) {
+            System.out.print(x + " ");
+        }
+    }
 }
 
 //input
@@ -354,3 +394,13 @@ public class GraphRepresentation {
 //4 5
 //5 1
 //1 3
+
+// * for toposort
+//2
+//6 6
+//6 3
+//6 1
+//5 1
+//5 2
+//3 4
+//4 2
