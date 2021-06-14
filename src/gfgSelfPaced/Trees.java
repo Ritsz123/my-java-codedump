@@ -1,5 +1,9 @@
 package gfgSelfPaced;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Trees {
 
     static class Node {
@@ -34,7 +38,7 @@ public class Trees {
     }
 
     int preIndex = 0;
-    Node constructTree(int[] inorder, int[] preorder, int start,int end) {
+    Node constructTreeUsingInorderAndPreorder(int[] inorder, int[] preorder, int start,int end) {
         if (start > end) return null;
 
         Node curr = new Node(preorder[preIndex]);
@@ -49,10 +53,30 @@ public class Trees {
             }
         }
 
-        curr.left = constructTree(inorder, preorder, start, currIndex-1);
+        curr.left = constructTreeUsingInorderAndPreorder(inorder, preorder, start, currIndex-1);
 
-        curr.right = constructTree(inorder, preorder, currIndex +1 , end);
+        curr.right = constructTreeUsingInorderAndPreorder(inorder, preorder, currIndex +1 , end);
 
         return curr;
+    }
+
+    ArrayList<Integer> leftViewOfTree (Node node) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+        while (!q.isEmpty()){
+            int qLen = q.size();
+            for (int i = 0;i< qLen;i++){
+                Node curr = q.remove();
+
+                if (i == 0){
+                    ans.add(curr.data);
+                }
+
+                if (curr.left != null) q.add(curr.left);
+                if (curr.right != null) q.add(curr.right);
+            }
+        }
+        return ans;
     }
 }
