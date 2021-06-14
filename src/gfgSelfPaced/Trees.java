@@ -62,6 +62,9 @@ public class Trees {
 
     ArrayList<Integer> leftViewOfTree (Node node) {
         ArrayList<Integer> ans = new ArrayList<>();
+
+        if(node == null) return ans;
+
         Queue<Node> q = new LinkedList<>();
         q.add(node);
         while (!q.isEmpty()){
@@ -73,6 +76,28 @@ public class Trees {
                     ans.add(curr.data);
                 }
 
+                if (curr.left != null) q.add(curr.left);
+                if (curr.right != null) q.add(curr.right);
+            }
+        }
+        return ans;
+    }
+
+    ArrayList<Integer> rightViewOfTree(Node node){
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        if (node == null) return ans;
+
+        Queue<Node> q = new LinkedList<>();
+        q.add(node);
+
+        while (!q.isEmpty()){
+            int size = q.size();
+            for (int i = 1;i <= size;i++){
+                Node curr = q.remove();
+                if (i == size){
+                    ans.add(curr.data);
+                }
                 if (curr.left != null) q.add(curr.left);
                 if (curr.right != null) q.add(curr.right);
             }
