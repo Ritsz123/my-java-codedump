@@ -104,4 +104,44 @@ public class Trees {
         }
         return ans;
     }
+
+    ArrayList<Integer> sprialTraversalOfTree(Node root){
+        ArrayList<Integer> ans = new ArrayList<>();
+        if(root == null) return ans;
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        boolean flag = true;
+        while (!q.isEmpty()){
+            int len = q.size();
+            int[] temp = new int[len];
+            int x = 0;
+            for (int i = 0;i<len;i++){
+                Node curr = q.remove();
+                temp[x++] = curr.data;
+                if (curr.left !=null) q.add(curr.left);
+                if (curr.right != null) q.add(curr.right);
+            }
+            if (flag) {
+                reverseArray(temp);
+            }
+
+            for(int e: temp){
+                ans.add(e);
+            }
+            flag = !flag;
+        }
+        return ans;
+    }
+
+    private void reverseArray(int[] temp) {
+        int i=  0;
+        int j = temp.length-1;
+        while (i<j){
+            int t= temp[i];
+            temp[i] = temp[j];
+            temp[j] = t;
+            i++;
+            j--;
+        }
+    }
 }
