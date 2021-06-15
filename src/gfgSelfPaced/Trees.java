@@ -16,8 +16,16 @@ public class Trees {
         }
     }
 
-    // ! convert tree to doubly linked list in place.
+    int height(Node root){
+        if(root == null) return 0;
+        int left = height(root.left);
+        int right = height(root.right);
 
+        return Math.min(left, right) + 1;
+    }
+
+
+    // ! convert tree to doubly linked list in place.
     Node prev = null;
     Node treeToDoublyLinkedList(Node root) {
         if (root == null) return null;
@@ -36,6 +44,9 @@ public class Trees {
         treeToDoublyLinkedList(root.right);
         return head;
     }
+
+//   ! Construct a tree ..
+//   ! either inorder preorder or inorder Postorder is required to construct tree
 
     int preIndex = 0;
     Node constructTreeUsingInorderAndPreorder(int[] inorder, int[] preorder, int start,int end) {
@@ -60,6 +71,7 @@ public class Trees {
         return curr;
     }
 
+//    ! Left view of a tree
     ArrayList<Integer> leftViewOfTree (Node node) {
         ArrayList<Integer> ans = new ArrayList<>();
 
@@ -83,6 +95,7 @@ public class Trees {
         return ans;
     }
 
+//    ! Right view of tree
     ArrayList<Integer> rightViewOfTree(Node node){
         ArrayList<Integer> ans = new ArrayList<>();
 
@@ -105,6 +118,7 @@ public class Trees {
         return ans;
     }
 
+//    ! sprial order traversal of tree
     ArrayList<Integer> sprialTraversalOfTree(Node root){
         ArrayList<Integer> ans = new ArrayList<>();
         if(root == null) return ans;
@@ -143,5 +157,33 @@ public class Trees {
             i++;
             j--;
         }
+    }
+
+    // ! maxdiameter is the maximum distance between 2 leaf nodes
+//    * Brute solution
+    int maxDiameterOfTree(Node root) {
+        if (root == null) return 0;
+        int left = height(root.left);
+        int right = height(root.right);
+
+        int currHeight = left + right + 1;
+        int max = Math.max(maxDiameterOfTree(root.left), maxDiameterOfTree(root.right));
+        max = Math.max(max, currHeight);
+        return max;
+    }
+
+//    the idea is to simply modify the height finding function
+
+    int maxDiameter = 0;
+    int maxDiameterEfficient(Node root){
+        if(root == null) return 0;
+
+        int left = maxDiameterEfficient(root.left);
+        int right = maxDiameterEfficient(root.right);
+
+        // Code change in height fn
+        maxDiameter = Math.max(maxDiameter, left + right + 1);
+        //
+        return Math.max(left, right) + 1;
     }
 }
