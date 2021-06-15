@@ -186,4 +186,28 @@ public class Trees {
         //
         return Math.max(left, right) + 1;
     }
+
+    // ! lowest Common ancestor
+    //* lowest means nearest...
+
+    // *Brute
+    // find the path to n1
+    // find path to n2
+    // check for commons in these paths the last common is ans.
+
+    // * efficient
+    Node lcs(Node root, int n1, int n2) {
+        if (root == null || root.data == n1 || root.data == n2){
+            return root;
+        }
+
+        Node left = lcs(root.left, n1,n2);
+        Node right = lcs(root.right, n1,n2);
+
+        //not found in any part
+        if (left == null && right == null) return null;
+        else if (left == null) return right; //left is null right is not;
+        else if (right == null) return left; // right is null left is not;
+        else return root; // n1 is in left && n2 is in right or opposite then nearest connection is the current node.
+    }
 }
