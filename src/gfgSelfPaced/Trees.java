@@ -210,4 +210,26 @@ public class Trees {
         else if (right == null) return left; // right is null left is not;
         else return root; // n1 is in left && n2 is in right or opposite then nearest connection is the current node.
     }
+
+    int countNodesInCompleteBinaryTree(Node root) {
+        if (root == null) return 0;
+
+        Node curr = root;
+        int lh = 0;
+        int rh = 0;
+        while (curr != null) {
+            lh++;
+            curr = curr.left;
+        }
+        curr = root;
+        while (curr != null){
+            rh++;
+            curr = curr.right;
+        }
+
+        if (lh == rh){
+            return (int) Math.pow(2, lh) - 1;
+        }
+        return countNodesInCompleteBinaryTree(root.left) + countNodesInCompleteBinaryTree(root.right) + 1;
+    }
 }
