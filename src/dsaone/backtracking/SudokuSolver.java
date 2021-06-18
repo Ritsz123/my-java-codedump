@@ -63,6 +63,14 @@ public class SudokuSolver {
             }
         }
 
+        // check in 3 * 3
+        for(int i = row - (row % 3); i < row - (row % 3)  + 3; i++) {
+            for (int j = col - (col % 3); j< col - (col % 3) + 3; j++) {
+                if (sudoku[i][j] == number){
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
