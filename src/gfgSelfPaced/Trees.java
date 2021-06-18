@@ -45,6 +45,21 @@ public class Trees {
         return head;
     }
 
+    Node head = null, prev_node = null;
+    void treeTODLl(Node root){
+        if(root == null) return;
+        treeTODLl(root.left);
+        if (head == null){
+            head = root;
+            prev_node = root;
+        } else {
+            prev_node.right = root;
+            root.left = prev_node;
+            prev = prev_node.right;
+        }
+        treeTODLl(root.right);
+    }
+
 //   ! Construct a tree ..
 //   ! either inorder preorder or inorder Postorder is required to construct tree
 
