@@ -232,4 +232,24 @@ public class Trees {
         }
         return countNodesInCompleteBinaryTree(root.left) + countNodesInCompleteBinaryTree(root.right) + 1;
     }
+
+    boolean checkIfSubtree(Node n1, Node n2){
+        if(n1 == null){
+            return false;
+        }else if(isSame(n1,n2)){
+            return true;
+        }else{
+            return checkIfSubtree(n1.left,n2) || checkIfSubtree(n1.right, n2);
+        }
+    }
+
+    boolean isSame(Node n1, Node n2){
+        if(n1 == null || n2 == null){
+            return n1 == n2;
+        }else if(n1.data == n2.data){
+            return isSame(n1.left, n2.left) && isSame(n2.right, n2.right);
+        }else {
+            return false;
+        }
+    }
 }
