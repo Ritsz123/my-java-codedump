@@ -267,4 +267,23 @@ public class Trees {
             return false;
         }
     }
+
+//    ! Maximum path sum from any node to any node in tree
+    int maxSum;
+    int maxPathSumFromAnyNodeToAnyNode(Node root){
+        maxSum = Integer.MIN_VALUE;
+        maxPath(root);
+        return maxSum;
+    }
+
+    int maxPath(Node root) {
+        if(root == null) return 0;
+
+        int left = Math.max(0, maxPath(root.left)); // to avoid -ve values
+        int right = Math.max(0, maxPath(root.right));
+
+        maxSum = Math.max(maxSum, left + right + root.data); //* maximum for left-> node-> right
+
+        return Math.max(left, right) + root.data;
+    }
 }
