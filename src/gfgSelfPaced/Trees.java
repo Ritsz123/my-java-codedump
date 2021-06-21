@@ -286,4 +286,24 @@ public class Trees {
 
         return Math.max(left, right) + root.data;
     }
+
+    Node treeFromLinkedList(Node llist){
+        if (llist == null) return null;
+        Queue<Node> q = new LinkedList<>();
+        Node root = new Node(llist.data);
+        q.add(root);
+        llist = llist.left;
+        while (llist != null){
+            Node curr = q.remove();
+            curr.left = new Node(llist.data);
+            llist = llist.left;
+            q.add(curr.left);
+            if (llist != null){
+                curr.right = new Node(llist.data);;
+                llist = llist.left;
+                q.add(curr.right);
+            }
+        }
+        return root;
+    }
 }
