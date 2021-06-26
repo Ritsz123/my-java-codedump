@@ -32,8 +32,10 @@ public class BinarySearchTree {
 //        bst.deleteNodeInBST(root, 5);
 
         //! floor of BST
+        System.out.println("FLOOR : " + bst.floorOfBST(root, 6));
 
-        System.out.println("FLOOR : " + bst.floorOfBST(root, 4));
+        //! ceil of BST
+        System.out.println("CEIL : " + bst.ceilOfBST(root, 7));
 
         bst.printTree(root);
     }
@@ -131,6 +133,23 @@ public class BinarySearchTree {
             }
         }
         return ans;
+    }
+
+    int ceilOfBST(Node root, int val){
+        if(root == null) return -1;
+        int ans = Integer.MAX_VALUE;
+        while (root != null){
+            if (root.data == val){
+                return val;
+            } else if (root.data < val){
+                root = root.right;
+            }else{
+                ans = root.data;
+                root = root.left;
+            }
+        }
+        return ans;
+
     }
 
     private Node successor(Node root){
