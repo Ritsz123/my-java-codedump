@@ -39,12 +39,34 @@ public class BinarySearchTree {
 //        System.out.println("CEIL : " + bst.ceilOfBST(root, 7));
 
         //! ceiling on the left side
-        int[] arr1 = { 2, 8, 30, 15, 25, 12 };
-        ceilingOnTheLeftSide(arr1);
+//        int[] arr1 = { 2, 8, 30, 15, 25, 12 };
+//        ceilingOnTheLeftSide(arr1);
 
+        //! Check for bst
+        System.out.println(isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
 
+        //* this solution uses technique of preorder traversal but in constants space..
+        System.out.println(isBst2(root));
 
 //        bst.printTree(root);
+    }
+
+    static boolean isBST(Node root, int min, int max){
+        if (root == null) return true;
+
+        return min < root.data
+            && root.data < max
+            && isBST(root.left, min, root.data)
+            && isBST(root.right,root.data, max);
+    }
+
+    static int prev = Integer.MIN_VALUE;
+    static boolean isBst2(Node root){
+        if (root == null) return true;
+        if (!isBst2(root.left)) return false;
+        if (root.data <= prev) return false;
+        prev = root.data;
+        return isBst2(root.right);
     }
 
     static void ceilingOnTheLeftSide(int[] arr) {
