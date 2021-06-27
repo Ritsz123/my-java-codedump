@@ -2,6 +2,7 @@ package gfgSelfPaced;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.TreeSet;
 
 public class BinarySearchTree {
 
@@ -32,12 +33,33 @@ public class BinarySearchTree {
 //        bst.deleteNodeInBST(root, 5);
 
         //! floor of BST
-        System.out.println("FLOOR : " + bst.floorOfBST(root, 6));
+//        System.out.println("FLOOR : " + bst.floorOfBST(root, 6));
 
         //! ceil of BST
-        System.out.println("CEIL : " + bst.ceilOfBST(root, 7));
+//        System.out.println("CEIL : " + bst.ceilOfBST(root, 7));
 
-        bst.printTree(root);
+        //! ceiling on the left side
+        int[] arr1 = { 2, 8, 30, 15, 25, 12 };
+        ceilingOnTheLeftSide(arr1);
+
+
+
+//        bst.printTree(root);
+    }
+
+    static void ceilingOnTheLeftSide(int[] arr) {
+        TreeSet<Integer> ts = new TreeSet<>();
+
+        System.out.print("-1 ");
+        for (int i =1;i< arr.length;i++){
+            Integer c = ts.ceiling(arr[i]);
+            if (c != null) {
+                System.out.print(c + " ");
+            }else{
+                System.out.print("-1 ");
+            }
+            ts.add(arr[i]);
+        }
     }
 
     Node createTree(Integer[] arr){
