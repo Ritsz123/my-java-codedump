@@ -1,9 +1,7 @@
 package gfgSelfPaced;
 
-import java.util.HashSet;
+import java.util.*;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.TreeSet;
 
 public class BinarySearchTree {
 
@@ -50,15 +48,36 @@ public class BinarySearchTree {
 //        System.out.println(isBst2(root));
 
         // ! check if there contains 2 nodes whose sum is k
-
         //* brute
         // find inorder traversal add it in array now find sum from inorder traversal using 2 pointer approach
 
         // * Efficient
-        System.out.println(pairSum(root, 9, new HashSet<>()));
+//        System.out.println(pairSum(root, 9, new HashSet<>()));
+
+
+        //! vertical sum of BST
+        verticalSumBST(root);
 
 
 //        bst.printTree(root);
+    }
+
+    static void verticalSumBST(Node root) {
+        TreeMap<Integer, Integer> mp = new TreeMap<>();
+        vSum(root, mp , 0);
+        for (Map.Entry<Integer,Integer> e: mp.entrySet()){
+            System.out.print(e.getValue() + " ");
+        }
+        System.out.println();
+    }
+
+    static void vSum(Node root, TreeMap<Integer, Integer> tm, int hd) {
+        if (root == null) return;
+        vSum(root.left, tm, hd-1);
+
+        tm.put(hd, tm.getOrDefault(hd, 0) + root.data);
+
+        vSum(root.right, tm, hd+1);
     }
 
     static boolean pairSum(Node root, int sum, HashSet<Integer> hs) {
