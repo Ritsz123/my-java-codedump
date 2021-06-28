@@ -1,5 +1,6 @@
 package gfgSelfPaced;
 
+import javafx.util.Pair;
 import java.util.*;
 import java.util.LinkedList;
 
@@ -56,11 +57,52 @@ public class BinarySearchTree {
 
 
         //! vertical sum of BST
-        verticalSumBST(root);
+//        verticalSumBST(root);
+
+        //! vertical traversal BST
+        verticalTraversalBST(root);
 
 
 //        bst.printTree(root);
     }
+
+    static void verticalTraversalBST(Node root){
+        Queue<Pair<Node, Integer>> q = new LinkedList<>();
+        q.add(new Pair<>(root, 0));
+        TreeMap<Integer, ArrayList<Integer>> tm = new TreeMap<>();
+        while (!q.isEmpty()){
+            int size = q.size();
+            for (int i = 1;i <= size;i++){
+                Pair<Node,Integer> p = q.remove();
+                Node curr = p.getKey();
+                int hd = p.getValue();
+
+                if (tm.containsKey(hd)){
+                    tm.get(hd).add(curr.data);
+                }else{
+                    ArrayList<Integer> al = new ArrayList<>();
+                    al.add(curr.data);
+                    tm.put(hd, al);
+                }
+
+                if (curr.left != null) {
+                    q.add(new Pair<>(curr.left, hd-1));
+                }
+                if (curr.right != null){
+                    q.add(new Pair<>(curr.right, hd + 1));
+                }
+            }
+        }
+
+        for (Map.Entry<Integer, ArrayList<Integer>> e : tm.entrySet()){
+            System.out.print(e.getKey() + " : ");
+            for (int x: e.getValue()){
+                System.out.print(x + " ");
+            }
+            System.out.println();
+        }
+    }
+
 
     static void verticalSumBST(Node root) {
         TreeMap<Integer, Integer> mp = new TreeMap<>();
