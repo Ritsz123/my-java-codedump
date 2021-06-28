@@ -1,5 +1,6 @@
 package gfgSelfPaced;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.TreeSet;
@@ -43,12 +44,27 @@ public class BinarySearchTree {
 //        ceilingOnTheLeftSide(arr1);
 
         //! Check for bst
-        System.out.println(isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+//        System.out.println(isBST(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
 
         //* this solution uses technique of preorder traversal but in constants space..
-        System.out.println(isBst2(root));
+//        System.out.println(isBst2(root));
+
+        // ! check if there contains 2 nodes whose sum is k
+        System.out.println(pairSum(root, 9, new HashSet<>()));
+
 
 //        bst.printTree(root);
+    }
+
+    static boolean pairSum(Node root, int sum, HashSet<Integer> hs) {
+        if (root == null) return false;
+
+        if(pairSum(root.left, sum, hs)) return true;
+
+        if (hs.contains(sum - root.data)) return true;
+        else hs.add(root.data);
+
+        return pairSum(root.right, sum, hs);
     }
 
     static boolean isBST(Node root, int min, int max){
