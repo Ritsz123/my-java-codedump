@@ -50,6 +50,11 @@ public class BinarySearchTree {
 //        System.out.println(isBst2(root));
 
         // ! check if there contains 2 nodes whose sum is k
+
+        //* brute
+        // find inorder traversal add it in array now find sum from inorder traversal using 2 pointer approach
+
+        // * Efficient
         System.out.println(pairSum(root, 9, new HashSet<>()));
 
 
