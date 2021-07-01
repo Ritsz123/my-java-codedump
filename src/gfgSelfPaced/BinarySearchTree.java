@@ -63,11 +63,34 @@ public class BinarySearchTree {
 //        verticalTraversalBST(root);
 
         // ! top view of Binary tree
-        topViewOfBinaryTree(root);
+//        topViewOfBinaryTree(root);
 
+        // ! bottom view of BST
+        bottomViewOfBinaryTree(root);
 //        bst.printTree(root);
     }
 
+    static void bottomViewOfBinaryTree(Node root){
+        if (root == null) return;
+        Queue<Pair<Node,Integer>> q = new LinkedList<>();
+        q.add(new Pair<Node, Integer>(root, 0));
+        TreeMap<Integer, Integer> tm = new TreeMap<>();
+
+        while (!q.isEmpty()){
+            Pair<Node,Integer> p = q.remove();
+            Node curr = p.getKey();
+            int hd = p.getValue();
+
+            tm.put(hd, curr.data);
+
+            if (curr.left != null) q.add(new Pair<>(curr.left, hd - 1));
+            if (curr.right != null) q.add(new Pair<>(curr.right, hd + 1));
+        }
+
+        for (Map.Entry<Integer, Integer> e: tm.entrySet()){
+            System.out.print(e.getValue() + " ");
+        }
+    }
 
     static void topViewOfBinaryTree(Node root){
         Queue<Pair<Node, Integer>> q = new LinkedList<>();
