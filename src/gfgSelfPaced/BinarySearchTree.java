@@ -66,8 +66,24 @@ public class BinarySearchTree {
 //        topViewOfBinaryTree(root);
 
         // ! bottom view of BST
-        bottomViewOfBinaryTree(root);
+//        bottomViewOfBinaryTree(root);
+
+        //! lowest common ancestor of BST
+        Node ans = lowestCommonAncestorInBST(root, 2,7);
+        System.out.println("lca : " + ans.data);
 //        bst.printTree(root);
+    }
+
+    static Node lowestCommonAncestorInBST(Node root, int n1, int n2){
+        if(root == null) return root;
+
+        if(root.data < n1 && root.data < n2){
+            return lowestCommonAncestorInBST(root.right, n1, n2);
+        }else if (root.data > n1 && root.data > n2){
+            return lowestCommonAncestorInBST(root.left, n1, n2);
+        }else {
+            return root;
+        }
     }
 
     static void bottomViewOfBinaryTree(Node root){
