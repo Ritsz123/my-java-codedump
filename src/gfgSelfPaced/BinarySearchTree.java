@@ -69,8 +69,12 @@ public class BinarySearchTree {
 //        bottomViewOfBinaryTree(root);
 
         //! lowest common ancestor of BST
-        Node ans = lowestCommonAncestorInBST(root, 2,7);
-        System.out.println("lca : " + ans.data);
+//        Node ans = lowestCommonAncestorInBST(root, 2,7);
+//        System.out.println("lca : " + ans.data);
+
+        //! Kth largest element in BST
+        int kthElement = kthLargestElementInBST(root, 4);
+        System.out.println(kthElement);
 //        bst.printTree(root);
     }
 
@@ -167,6 +171,24 @@ public class BinarySearchTree {
         }
     }
 
+    static int nodeCount = 0, ans = -1;
+    static int kthLargestElementInBST(Node root, int k){
+        reverseInorder(root, k);
+        return ans;
+    }
+
+    static void reverseInorder(Node root, int k){
+        if (root == null || nodeCount > k) return;
+        reverseInorder(root.right, k);
+
+        nodeCount++;
+        if (nodeCount == k){
+            ans = root.data;
+        }
+
+        if(nodeCount < k )
+        reverseInorder(root.left, k);
+    }
 
     static void verticalSumBST(Node root) {
         TreeMap<Integer, Integer> mp = new TreeMap<>();
