@@ -73,9 +73,35 @@ public class BinarySearchTree {
 //        System.out.println("lca : " + ans.data);
 
         //! Kth largest element in BST
-        int kthElement = kthLargestElementInBST(root, 4);
-        System.out.println(kthElement);
+//        int kthElement = kthLargestElementInBST(root, 4);
+//        System.out.println(kthElement);
+
+        // ! check if there contains a pair with sum k in BST
+        //* brute
+//        * O(N) space & time
+//        traverse inorder the tree to make inorder array(sorted array)
+//        then use 2 pointer approach to check if sum is present
+
+        //* efficient
+//        !O(h) time & O(h) space
+        HashSet<Integer> hs = new HashSet<>();
+        System.out.println(pairWithGivenSumInBST(root, 10, hs));
+
+
 //        bst.printTree(root);
+    }
+
+    static boolean pairWithGivenSumInBST(Node root, int sum, HashSet<Integer> hs){
+        if (root == null) return false;
+
+        if (pairWithGivenSumInBST(root.left, sum, hs)) return true;
+
+        if (hs.contains(sum - root.data)){
+            return true;
+        }else{
+            hs.add(root.data);
+        }
+        return pairWithGivenSumInBST(root.right, sum, hs);
     }
 
     static Node lowestCommonAncestorInBST(Node root, int n1, int n2){
