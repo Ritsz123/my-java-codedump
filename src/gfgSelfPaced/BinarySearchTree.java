@@ -92,16 +92,35 @@ public class BinarySearchTree {
 //        System.out.println(ans);
 
         //! construct BST from level order traversal
-        ArrayList<Integer> al = new ArrayList<>();
-        int[] levelOrder = {7,4,12,3,6,8,1,5,10};
-        for (int x: levelOrder){
-            al.add(x);
-        }
-        Node tree = constructBSTFromLevelOrderTraversal(al);
+//        ArrayList<Integer> al = new ArrayList<>();
+//        int[] levelOrder = {7,4,12,3,6,8,1,5,10};
+//        for (int x: levelOrder){
+//            al.add(x);
+//        }
+//        Node tree = constructBSTFromLevelOrderTraversal(al);
+//        bst.printTree(tree);
 
+        // ! construct BST from preorder traversal
+        // in preorder sequence is -> Root, LEFT TREE, RIGHT TREE
+
+        int[] pre = {40,30,35,80,100};
+        Node tree = constructBSTFromPreorderTraversal(pre, 0, pre.length-1);
         bst.printTree(tree);
+    }
 
-//        bst.printTree(root);
+    static Node constructBSTFromPreorderTraversal(int[] arr, int start, int end){
+        if (start <= end) {
+            Node root = new Node(arr[start]);
+            int mid = start+1;
+            while (mid <= end && arr[mid] < arr[start]){
+                mid++;
+            }
+
+            root.left = constructBSTFromPreorderTraversal(arr, start+1, mid-1);
+            root.right = constructBSTFromPreorderTraversal(arr, mid, end);
+            return root;
+        }
+        return null;
     }
 
     static Node constructBSTFromLevelOrderTraversal(ArrayList<Integer> al) {
