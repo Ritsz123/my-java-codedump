@@ -88,10 +88,40 @@ public class BinarySearchTree {
 //        System.out.println(pairWithGivenSumInBST(root, 10, hs));
 
         //! find closest element difference in BST
-        int ans = findClosestElementDifference(root, 9);
-        System.out.println(ans);
+//        int ans = findClosestElementDifference(root, 9);
+//        System.out.println(ans);
+
+        //! construct BST from level order traversal
+        ArrayList<Integer> al = new ArrayList<>();
+        int[] levelOrder = {7,4,12,3,6,8,1,5,10};
+        for (int x: levelOrder){
+            al.add(x);
+        }
+        Node tree = constructBSTFromLevelOrderTraversal(al);
+
+        bst.printTree(tree);
 
 //        bst.printTree(root);
+    }
+
+    static Node constructBSTFromLevelOrderTraversal(ArrayList<Integer> al) {
+        if (al.size() < 1) return null;
+        Node root = new Node(al.get(0));
+        ArrayList<Integer> a1 = new ArrayList<>();
+        ArrayList<Integer> a2 = new ArrayList<>();
+
+        for (int i = 1; i<al.size();i++){
+            int x = al.get(i);
+            if (x < root.data){
+                a1.add(x);
+            }else{
+                a2.add(x);
+            }
+        }
+
+        root.left = constructBSTFromLevelOrderTraversal(a1);
+        root.right = constructBSTFromLevelOrderTraversal(a2);
+        return root;
     }
 
     static int findClosestElementDifference(Node root, int k){
