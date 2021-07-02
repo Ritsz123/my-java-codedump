@@ -84,11 +84,24 @@ public class BinarySearchTree {
 
         //* efficient
 //        !O(h) time & O(h) space
-        HashSet<Integer> hs = new HashSet<>();
-        System.out.println(pairWithGivenSumInBST(root, 10, hs));
+//        HashSet<Integer> hs = new HashSet<>();
+//        System.out.println(pairWithGivenSumInBST(root, 10, hs));
 
+        //! find closest element difference in BST
+        int ans = findClosestElementDifference(root, 9);
+        System.out.println(ans);
 
 //        bst.printTree(root);
+    }
+
+    static int findClosestElementDifference(Node root, int k){
+        if(root == null) return Integer.MAX_VALUE;
+        if (root.data == k) return 0;
+        if (root.data < k){
+            return Math.min(Math.abs(root.data - k), findClosestElementDifference(root.right, k));
+        }else{
+            return Math.min(Math.abs(root.data - k), findClosestElementDifference(root.left,k));
+        }
     }
 
     static boolean pairWithGivenSumInBST(Node root, int sum, HashSet<Integer> hs){
