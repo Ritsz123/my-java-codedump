@@ -39,21 +39,24 @@ public class DirectedWeightedGraph {
 
         // at this point we have topo sort in stack
         dist[source] = 0;
-        while (!st.isEmpty()){
+        while (!st.isEmpty()) {
             int curr = st.pop();
-            for (Pair x: adj.get(curr)){
-                int currentDistance = dist[curr] + x.wt; // the main part...
-                if (currentDistance < dist[x.v]) {
-                    dist[x.v] = currentDistance;
+            if (dist[curr] != Integer.MAX_VALUE){
+                for (Pair x: adj.get(curr)){
+                    int currentDistance = dist[curr] + x.wt; // the main part...
+                    if (currentDistance < dist[x.v]) {
+                        dist[x.v] = currentDistance;
+                    }
                 }
             }
+
         }
 
         for(int x: dist){
             if (x != Integer.MAX_VALUE){
                 System.out.print(x + " ");
             }else{
-                System.out.println("-1 ");
+                System.out.print("-1 ");
             }
         }
 
@@ -78,7 +81,7 @@ public class DirectedWeightedGraph {
             adj.get(a).add(new Pair(b, c));
         }
 
-        shortestPathInDirectedWeightedGraph(adj, 0, n);
+        shortestPathInDirectedWeightedGraph(adj, 1, n);
     }
 }
 
