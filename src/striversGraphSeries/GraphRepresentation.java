@@ -231,6 +231,28 @@ class Graph {
         }
         return topoSort;
     }
+
+    public void shortestPathInUndirectedGraph(ArrayList<ArrayList<Integer>> adj, int n, int src) {
+        int[] dist = new int[n+1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+
+        Queue<Integer> q = new LinkedList<>();
+        q.add(src);
+        dist[src] = 0;
+        while (!q.isEmpty()){
+            int curr = q.remove();
+            for (int x: adj.get(curr)){
+                if ((dist[curr] + 1) < dist[x]){
+                    dist[x] = dist[curr] + 1;
+                    q.add(x);
+                }
+            }
+        }
+
+        for(int x: dist){
+            System.out.print(x != Integer.MAX_VALUE ? x + " " : -1 + " ");
+        }
+    }
 }
 
 public class GraphRepresentation {
@@ -285,7 +307,7 @@ public class GraphRepresentation {
 //        detectCycleInDirectedGraph(n, adj, g, graphType);
 
         // detect cycle in directed graph BFS
-        System.out.println("is cycle directed BFS " + g.detectCycleInDirectedGraphBFS(adj,n));
+//        System.out.println("is cycle directed BFS " + g.detectCycleInDirectedGraphBFS(adj,n));
 
         //! topological sort order DFS
 //        topologicalSortOrderOfGraph(n, adj, Traverse.DFS, g, graphType);
@@ -293,6 +315,10 @@ public class GraphRepresentation {
         //!topological sort order bfs
         //also known as kahn's algorithm
 //        topologicalSortOrderBFS(n,adj,g);
+
+        //! shortest path from a node in graph
+        System.out.println("shortest path");
+        g.shortestPathInUndirectedGraph(adj, n, 1);
 
     }
 
