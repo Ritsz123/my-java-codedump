@@ -111,6 +111,19 @@ public class BinaryHeap {
 
     }
 
+    void decreaseKey(int i, int key){
+        arr[i] = key;
+
+        while (i != 0 && arr[parentIndex(i)] > arr[i]){
+            //swap
+            int t = arr[i];
+            arr[i] = arr[parentIndex(i)];
+            arr[parentIndex(i)] = t;
+
+            i = parentIndex(i);
+        }
+    }
+
     public static void main(String[] args) {
 
         BinaryHeap heap = new BinaryHeap(10);
@@ -120,6 +133,10 @@ public class BinaryHeap {
 //        System.out.println(heap.arr[0]);
 
 //        System.out.println(heap.getLeft(0));
+        System.out.println(heap.extractMin());
+
+        heap.decreaseKey(1, 10);
+
         System.out.println(heap.extractMin());
     }
 }
