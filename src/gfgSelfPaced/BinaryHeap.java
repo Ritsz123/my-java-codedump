@@ -129,6 +129,12 @@ public class BinaryHeap {
         extractMin();
     }
 
+    void buildHeap() {
+        for (int i = (size - 2) / 2; i>=0; i--){
+            minHeapify(i);
+        }
+    }
+
     public static void main(String[] args) {
 
         BinaryHeap heap = new BinaryHeap(10);
@@ -136,6 +142,7 @@ public class BinaryHeap {
         for (int x: temp){
             heap.insertMinHeap(x);
         }
+        heap.buildHeap();
 //        System.out.println(heap.arr[0]);
 
 //        System.out.println(heap.getLeft(0));
