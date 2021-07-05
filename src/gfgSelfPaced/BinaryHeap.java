@@ -124,19 +124,26 @@ public class BinaryHeap {
         }
     }
 
+    void deleteElementAtIndex(int i){
+        decreaseKey(i, Integer.MIN_VALUE);
+        extractMin();
+    }
+
     public static void main(String[] args) {
 
         BinaryHeap heap = new BinaryHeap(10);
-        heap.insertMinHeap(19);
-        heap.insertMinHeap(13);
-        heap.insertMinHeap(20);
+        int [] temp = { 10, 15, 25, 100, 20, 5, 100};
+        for (int x: temp){
+            heap.insertMinHeap(x);
+        }
 //        System.out.println(heap.arr[0]);
 
 //        System.out.println(heap.getLeft(0));
         System.out.println(heap.extractMin());
 
-        heap.decreaseKey(1, 10);
+        heap.decreaseKey(1,2);
 
-        System.out.println(heap.extractMin());
+        heap.deleteElementAtIndex(1);
+
     }
 }
