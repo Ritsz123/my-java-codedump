@@ -1,5 +1,8 @@
 package gfgSelfPaced;
 
+import java.util.Collections;
+import java.util.PriorityQueue;
+
 public class BinaryHeap {
     private final int[] arr;
     private final int capacity;
@@ -152,5 +155,56 @@ public class BinaryHeap {
 
         heap.deleteElementAtIndex(1);
 
+    }
+}
+
+class HeapProblems {
+    public static void main(String[] args) {
+        int[] arr = {5,15,1,3};
+        medianOfAStream(arr);
+    }
+
+    static void medianOfAStream(int[] arr) {
+        PriorityQueue<Integer> left = new PriorityQueue<>(Collections.reverseOrder()); //max heap
+        PriorityQueue<Integer> right = new PriorityQueue<>();
+
+        for (int i = 0;i < arr.length; i++){
+            insert(arr[i], left, right);
+        }
+    }
+
+    private static void insert(int x, PriorityQueue<Integer> left, PriorityQueue<Integer> right) {
+        if (left.size() == 0 || x <= left.peek()){
+            left.add(x);
+        } else {
+            right.add(x);
+        }
+
+        if (Math.abs(left.size() - right.size()) > 1){
+            balance(left, right);
+        }
+        System.out.println(median(left,right));
+    }
+
+    private static void balance(PriorityQueue<Integer> left, PriorityQueue<Integer> right){
+        if (Math.abs(left.size() - right.size()) > 1){
+            if (left.size() > right.size()){
+                right.add(left.remove());
+            }else{
+                left.add(right.remove());
+            }
+        }
+    }
+
+    private static double median(PriorityQueue<Integer> left, PriorityQueue<Integer> right){
+        if (left.size() == right.size() && right.size() > 0){
+            return (left.peek() + right.peek()) / 2.0;
+        }else{
+            if (left.size() > right.size()){
+                return left.peek();
+            }else {
+                return right.peek();
+            }
+        }
     }
 }
