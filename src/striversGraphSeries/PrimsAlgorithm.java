@@ -25,17 +25,24 @@ public class PrimsAlgorithm {
 
         dist[0] = 0;
 
+        //as we will only have n-1 edges in mst therefore only traverse till n-1
         for(int i = 0;i<n-1;i++){
-            int min = Integer.MAX_VALUE, u=0;
-            for (int v = 0; v<n;v++){
+            int min = Integer.MAX_VALUE, u = 0;
+
+            //find minimum weight such that it is not used
+            //greedy strategy....
+            for (int v = 0; v<n;v++) {
                 if (mstSet[v] == false && dist[v] < min){
                     min = dist[v];
                     u = v;
                 }
             }
+
+            //mark the selected weight as used
             mstSet[u] = true;
 
-            for (Pair x: adj.get(i)){
+            // for all adjacent nodes if current weight is less than selected weight then selected weight = current weight
+            for (Pair x: adj.get(i)) {
                 if (mstSet[x.v] == false && x.weight < dist[x.v]){
                     parent[x.v] = u;
                     dist[x.v] = x.weight;
