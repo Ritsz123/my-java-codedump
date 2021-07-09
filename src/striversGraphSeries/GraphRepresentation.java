@@ -79,7 +79,7 @@ class Graph {
         return ans;
     }
 
-    public boolean detectCycleBFS(int start, ArrayList<ArrayList<Integer>> adj, boolean[] visited){
+    public boolean detectCycleInUndirectedGraphBFS(int start, ArrayList<ArrayList<Integer>> adj, boolean[] visited){
         Queue<Node> q = new LinkedList<>();
 
         visited[start] = true;
@@ -102,13 +102,13 @@ class Graph {
         return false;
     }
 
-    public boolean detectCycleDFS(int start, int parent,boolean[] visited, ArrayList<ArrayList<Integer>> adj) {
+    public boolean detectCycleInUndirectedGraphDFS(int start, int parent, boolean[] visited, ArrayList<ArrayList<Integer>> adj) {
         visited[start] = true;
         for (Integer it: adj.get(start)){
             if (visited[it]){
                 if (it != parent) return true;
             }else{
-                return detectCycleDFS(it,start,visited,adj);
+                return detectCycleInUndirectedGraphDFS(it,start,visited,adj);
             }
         }
         return false;
@@ -348,9 +348,9 @@ public class GraphRepresentation {
         for (int i = 1;i<=n;i++){
             if (!visited[i]) {
                 if (t == Traverse.BFS){
-                    isCycle = g.detectCycleBFS(i,adj,visited);
+                    isCycle = g.detectCycleInUndirectedGraphBFS(i,adj,visited);
                 } else if (t == Traverse.DFS){
-                    isCycle = g.detectCycleDFS(i,-1,visited,adj);
+                    isCycle = g.detectCycleInUndirectedGraphDFS(i,-1,visited,adj);
                 }
                 if (isCycle) break;
             }
