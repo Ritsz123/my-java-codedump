@@ -8,9 +8,12 @@ public class ArticulationPoint {
 
     static void findArticulationPoint(ArrayList<ArrayList<Integer>> adj, int n){
         boolean[] visited = new boolean[n];
+
+        // dis [] to keep discovery time & low array to keep the lowest connected adjacent time
         int[] dis = new int[n];
         int[] low = new int[n];
 
+        // used hashset to avoid repeated answers
         HashSet<Integer> ans = new HashSet<>();
 
         int timer = 0;
@@ -28,25 +31,32 @@ public class ArticulationPoint {
 
     static void dfs(ArrayList<ArrayList<Integer>> adj, int curr, int parent, int[] dis, int[] low, boolean[] visited, int timer, HashSet<Integer> ans){
         visited[curr] = true;
+        // initially mark the low & discovery time as same i.e timer
         dis[curr] = low[curr] = timer++;
 
+        // keep child var to determine of the starting element is articulation point
+        // as it will only be articulation if it has more than 1 call of dfs for its adjacents
         int child = 0;
         for (int x: adj.get(curr)){
             if (x == parent) continue;
 
             if (!visited[x]){
                 dfs(adj, x, curr, dis, low, visited, timer,ans);
+                // after dfs update the low first
                 low[curr] = Math.min(low[curr], low[x]);
 
+                //main formula to find articulation point
                 if (low[x] >= dis[curr] && parent != -1){
                     ans.add(curr);
                 }
                 child++;
-            }else{
+            } else {
+                // if the adjacent is already visited do not call dfs or perform a check as it can never be articulation
                 low[curr] = Math.min(low[curr], low[x]);
             }
         }
 
+        //edge case to check if the starting element is articulation point
         if (parent == -1 && child > 1) ans.add(curr);
 
     }
