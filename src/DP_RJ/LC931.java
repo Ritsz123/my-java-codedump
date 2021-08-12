@@ -19,7 +19,7 @@ public class LC931 {
     }
 
     private static void findMinimumPathSumMemoizationDP(int[][] arr) {
-        int n = arr.length;;
+        int n = arr.length;
         int[][] dp = new int[n][n];
         for (int i = 0;i<n;i++){
             for (int j = 0;j<n;j++){
