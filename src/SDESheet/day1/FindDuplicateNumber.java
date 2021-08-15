@@ -1,5 +1,8 @@
 package SDESheet.day1;
 
+
+//! use floyd's cycle detection approach and find the intersection
+
 public class FindDuplicateNumber {
     public static void main(String[] args) {
         int[] arr = {1, 3, 4, 2, 2};
