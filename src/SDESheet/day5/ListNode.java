@@ -14,7 +14,7 @@ public class ListNode {
         next = null;
     }
 
-    static ListNode createList(int[] arr){
+    public static ListNode createList(int[] arr){
         ListNode dummy = new ListNode();
         ListNode temp = dummy;
         for (int x: arr){
